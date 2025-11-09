@@ -1,0 +1,229 @@
+🧭 6–7 Month DSA Roadmap (in JavaScript)
+
+note:- everything on notion platform
+
+Each month has clear goals, concepts, and practice focus.
+I’ll also include approximate weekly targets and tips for each phase.
+
+🩵 Month 1: Strengthen JavaScript Foundations
+
+Goal: Become fluent in JS syntax, logic, and data manipulation.
+You’ll prepare your foundation before touching complex DSA.
+
+📚 Topics to Cover
+
+Variables, data types
+Loops (for, while, for...of)
+Functions (normal, arrow, callbacks)
+Arrays (map, filter, reduce, forEach)
+Objects & JSON
+Classes & constructors
+ES6+ features (destructuring, spread, rest, etc.)
+
+🧠 Practice Ideas
+
+Reverse a string
+Find max/min in array
+Count occurrences of elements
+Sum of all elements
+Filter even numbers
+Sort numbers ascending/descending
+
+📅 Weekly Plan
+Week	  Focus	                         Goal
+1	    JS Basics	            Loops, functions, arrays
+2	    Objects, Strings	    String methods & object manipulation
+3	    Classes & ES6+	        Get comfortable writing clean JS
+4	    Problem Solving	        Practice 10–15 logic problems
+
+
+🧩 Month 2: Basic Data Structures (Array, String, Stack, Queue)
+
+Goal: Learn how data is stored, accessed, and modified efficiently.
+
+📚 Topics
+
+Arrays & Strings (Deep dive)
+Stack (LIFO)
+Queue (FIFO)
+Implementation using arrays
+Basic problem-solving patterns:
+Two pointers
+Sliding window
+
+🧠 Practice
+
+Reverse an array
+Check palindrome string
+Implement stack & queue
+Find subarray with given sum
+Longest substring without repeating chars
+
+📅 Weekly Plan
+Week	Focus	                                Goal
+1	  Arrays & Strings	            Learn manipulation & basic problems
+2	  Stack & Queue	                Learn implementation
+3	  Two Pointer Technique	        Start solving pattern problems
+4	  Sliding Window	            Learn optimization & practice 5+ problems
+
+
+💚 Month 3: Linked List + HashMap + Set
+
+Goal: Learn how to build your own data structures and handle dynamic data.
+
+📚 Topics
+
+Singly Linked List
+Doubly Linked List
+Hash Map (JS Map & Object)
+Hash Set (JS Set)
+Collision handling concepts
+Practical uses in JS
+
+🧠 Practice
+
+Reverse a linked list
+Detect cycle in a linked list
+Find intersection point
+Remove duplicates from array using Set
+Two-sum problem (using Map)
+
+📅 Weekly Plan
+Week	Focus	                                Goal
+1	    Linked List	                   Learn structure & traversal
+2	    Hash Map	                   Store key-value efficiently
+3	    Hash Set	                   Handle uniqueness efficiently
+4	    Practice	                   10–15 problems combining structures
+
+💙 Month 4: Recursion + Searching + Sorting
+
+Goal: Strengthen your algorithmic thinking and problem-solving.
+
+📚 Topics
+
+Recursion (base & recursive cases)
+Divide and Conquer
+Searching Algorithms:
+Linear Search
+Binary Search
+Sorting Algorithms:
+Bubble Sort, Selection Sort
+Merge Sort, Quick Sort
+
+🧠 Practice
+
+Factorial & Fibonacci (recursive)
+Power of number (recursion)
+Binary Search (target element)
+Merge two sorted arrays          
+Implement Merge Sort and Quick Sort
+
+📅 Weekly Plan
+Week	Focus	                          Goal
+1	          Recursion	            Understand call stack
+2	          Searching	            Binary Search mastery
+3	          Sorting	            Implement from scratch
+4	          Mixed practice	    Combine recursion + sorting
+
+
+🧡 Month 5: Trees + Binary Search Trees (BST)
+
+Goal: Learn hierarchical data structures — crucial for interviews.
+
+📚 Topics
+
+Binary Tree basics
+Traversals (Preorder, Inorder, Postorder)
+Binary Search Tree (BST)
+Tree operations (insert, delete, search)
+Depth & height concepts
+
+🧠 Practice
+
+Inorder traversal
+Find height of binary tree
+Check if tree is balanced
+Lowest Common Ancestor (LCA)
+Validate BST
+
+📅 Weekly Plan
+Week	    Focus	                     Goal
+1	      Tree Basics	              Representation & traversal
+2	      BST	                      Learn insert, search, delete
+3	      Tree Problems	              Solve recursive problems
+4	      Review	                  Solve 10–15 medium problems
+
+
+💜 Month 6: Graphs + Dynamic Programming (Intro)
+
+Goal: Learn complex relationships and optimization techniques.
+
+📚 Topics
+
+Graph basics (adjacency list, matrix)
+BFS & DFS
+Shortest path (Dijkstra’s, Bellman-Ford)
+Dynamic Programming (concept + recursion to memoization)
+Common DP problems (Fibonacci, Knapsack, LIS, etc.)
+
+🧠 Practice
+
+BFS, DFS traversal
+Detect cycle in graph
+Shortest path problem
+DP: Fibonacci, Climbing Stairs, Coin Change, Subset Sum
+
+📅 Weekly Plan
+Week	     Focus	                               Goal
+1	        Graphs	                   Understand representation & traversal
+2	        Graph Algorithms	       Shortest path & cycles
+3	        DP Basics	               Recursion → Memoization
+4	        DP Practice	               5–10 standard DP problems
+
+
+💫 Month 7: Revision + Patterns + Mock Practice
+
+Goal: Strengthen weak areas, identify patterns, and simulate interviews.
+
+📚 Focus
+
+Review weak data structures
+Revisit frequently asked interview patterns:
+Two pointers
+Sliding window
+Recursion to DP transitions
+Backtracking
+Take mock problem-solving sessions
+
+🧠 Practice Platforms
+
+LeetCode: 1 problem/day (easy → medium)
+NeetCode roadmap: follow patterns
+CodeWars / HackerRank: timed practice
+
+⚙️ Suggested Weekly Routine (throughout)
+Day	Focus
+Mon–Wed	Learn a new concept
+Thu–Sat	Practice 2–3 related problems
+Sun	Revise + note patterns
+📘 Tools & Resources
+
+Visualgo.net → visualize structures
+
+NeetCode.io (JS solutions)
+
+freeCodeCamp DSA course (JS)
+
+LeetCode Explore → guided DSA tracks
+
+Your custom platform (once you’re ready to add problems)
+
+🚀 Summary
+Stage	Duration	Focus
+Month 1	JS Foundations	Syntax, loops, arrays
+Month 2	Arrays, Stack, Queue	Data storage & access
+Month 3	LinkedList, Map, Set	Dynamic data handling
+Month 4	Recursion, Sorting	Algorithmic thinking
+Month 5	Trees, BST	Hierarchical data
+Month 6	Graphs, DP	Complex optimization
+Month 7	Revision	Strengthen & apply
