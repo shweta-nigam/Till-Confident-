@@ -23,3 +23,9 @@ console.log(2 + 2 + 2);     // 6     → all numbers, so addition only
 
 // - Any value taken using prompt() is of **string** type by default.
 // - Even if you type a number, it's stored as a string.
+
+
+// 3. Hoisting and TDZ
+
+// - Because of hoisting, variables declared with var are moved (“hoisted”) to the top of their scope — but not their values!
+// -🧩 let and const are also hoisted, but they live in the temporal dead zone — you can’t access them before they’re declared.

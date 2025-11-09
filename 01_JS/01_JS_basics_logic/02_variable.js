@@ -4,6 +4,8 @@
 var a = 9
 console.log(a);
 
+// can access b using var because of the hoisting concept
+// --- Because of hoisting, variables declared with var are moved (“hoisted”) to the top of their scope — but not their values!
 var b
 console.log(b);  // undefined
 b = 10
