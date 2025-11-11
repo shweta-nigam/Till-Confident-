@@ -35,9 +35,9 @@ console.log(c2);  // referenceError:  c2 is not defined
 let c2 
 
 // values can be changed if let is used 
-let c3 = 10
-c3 = 30
-console.log(c3)  // 3
+let p3 = 10
+p3 = 30
+console.log(p3)  // 3
 
 // let can not be redeclared 
 let d2 = 2
@@ -50,13 +50,13 @@ console.log(d2);
 
 
 // b3 declared but not defined , aldo it can not be non-initialized
-const b3                       // 'const' declarations must be initialized.
+// const b3                       // 'const' declarations must be initialized.
 console.log(b3);              // SyntaxError: Missing initializer in const declaration
 b3 = 10
 
 // can not use c3 because const needs to initialized at the time declaration
 console.log(c3);  //SyntaxError: Missing initializer in const declaration
-const c3
+// const c3
 
 // values cannot be changed if const is used 
 const d3 = 10
