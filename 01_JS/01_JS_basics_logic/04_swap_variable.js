@@ -24,9 +24,9 @@ p = p - q    // p = 15   (before q = 15 then q = 5)
 console.log(p, q);  // 15, 5
 
 
-// 3 method: array destructuring 
+// 3 method: Array Destructuring Assignment
 
-let d = 30
-let e = 50
-[d , e ] = [e,d]
+let d = 30;
+let e = 50;
+[d , e] = [e,d]
 console.log(d,e);
