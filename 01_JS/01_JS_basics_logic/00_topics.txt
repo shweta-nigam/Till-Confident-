@@ -5,4 +5,7 @@
  > Relation b/w integers and string
 2. Sum and message 
 3. Accept and pont the answer 
-4. Swap 2 variable             
+4. Swap 2 variable 
+5. calculate area and perimeter of rectangle 
+6. area of triangle by heron's formula
+7. Circumference of circle  
