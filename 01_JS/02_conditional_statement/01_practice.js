@@ -4,29 +4,29 @@
 
 //Q1 valid user
 
-const age = Number(prompt("Enter your age"))        // NaN, if it is not a number (non-convertible)
-// const age = prompt("Enter your age")            // number and string , both are treated as string
-console.log(age);
+// const age = Number(prompt("Enter your age"))        // NaN, if it is not a number (non-convertible)
+// // const age = prompt("Enter your age")            // number and string , both are treated as string
+// console.log(age);
 
-// if(NaN === age){}             // not good as NaN === NaN is true
+// // if(NaN === age){}             // not good as NaN === NaN is true
 
-if(isNaN(age)){
-    console.log("Invalid input");  
-}
-else if (age >= 18) {
-    console.log("You can vote");  
-} else {
-   console.log("You cannot vote");
-}
+// if(isNaN(age)){
+//     console.log("Invalid input");  
+// }
+// else if (age >= 18) {
+//     console.log("You can vote");  
+// } else {
+//    console.log("You cannot vote");
+// }
 
-
-//Q2 Shop discount
+// Range Questions ----------------------------------------------------
+//Q2 Shop discount 
 // 0    -  5000     0%
 // 5001 -  7000     5%
 // 7001 -  9000    10%
 // 9001+           20% 
 
-let amount = 10000
+// let amount = 10000
 
 // if (amount > 5000) {                          // Good practice is to always start from small amount.
 //     console.log("Amount payable", amount - ((amount * 5)/100) )
@@ -39,13 +39,31 @@ let amount = 10000
 // }
 // Note:- JavaScript checks conditions from top to bottom, and the first matching condition stops everything else. Therefore start from small range to big.
 
-if (amount < 5000) {
+
+const amount = Number(prompt("Enter amount"))
+if ( amount > 0 && amount <= 5000) {
     console.log("Amount payable", amount)
-} else if(amount < 7000){
+} else if(amount > 5000 && amount <= 7000){
     console.log("Amount payable", amount - ((amount * 5)/100) )
-} else if(amount < 9000){
-    console.log(`Amount paypal after 10% off ${amount - ((amount * 10)/100)}`)
+} else if(amount > 7000 && amount <= 9000){
+    console.log(`Amount paypal after 10% off ${amount - Math.floor((amount * 10)/100)}`)
+} else if (amount > 9000){
+    console.log(`Amount paypal after 20% off ${amount - Math.floor((amount * 20)/100)}`)
 } else {
-    console.log(`Amount paypal after 20% off ${amount - (amount * 20)/100}`)
+ console.log("Invalid input")
 }
 
+//Q2 efficient way
+let dis = 0
+if ( amount > 0 && amount <= 5000) {
+   dis = 0
+} else if(amount > 5000 && amount <= 7000){
+    dis = 5
+} else if(amount > 7000 && amount <= 9000){
+  dis = 10
+} else if (amount > 9000){
+   dis = 20
+} else {
+ console.log("Invalid input")
+}
+console.log(`Amount paypal after ${dis}% off ${amount - Math.floor((amount * dis)/100)}`)
