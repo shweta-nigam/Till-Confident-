@@ -4,20 +4,20 @@
 
 //Q1 valid user
 
-// const age = Number(prompt("Enter your age"))        // NaN, if it is not a number (non-convertible)
-// // const age = prompt("Enter your age")            // number and string , both are treated as string
-// console.log(age);
+const age = Number(prompt("Enter your age"))        // NaN, if it is not a number (non-convertible)
+// const age = prompt("Enter your age")            // number and string , both are treated as string
+console.log(age);
 
-// // if(NaN === age){}             // not good as NaN === NaN is true
+// if(NaN === age){}             // not good as NaN === NaN is true
 
-// if(isNaN(age)){
-//     console.log("Invalid input");  
-// }
-// else if (age >= 18) {
-//     console.log("You can vote");  
-// } else {
-//    console.log("You cannot vote");
-// }
+if(isNaN(age)){
+    console.log("Invalid input");  
+}
+else if (age >= 18) {
+    console.log("You can vote");  
+} else {
+   console.log("You cannot vote");
+}
 
 // Range Questions ----------------------------------------------------
 //Q2 Shop discount 
