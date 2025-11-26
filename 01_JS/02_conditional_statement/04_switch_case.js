@@ -36,12 +36,13 @@ switch (day1) {
 }
 // output: Monday Tuesday
 
-
-let day2 = 1
+// --------------------------------------------
+let day2 = 4
 switch (day2) {
-    case 1:console.log("monday")
+    case 1:
     case 2:
     case 3:
+        console.log("monday")
         break;
     case 4:
     case 5:
@@ -49,7 +50,27 @@ switch (day2) {
         console.log("Wednesday")
         break;
     default:console.log("Weekend")
+}
+
+//for the  value of 1,2,3 we will get monday and not invalid for 1 and 2.
+//similarly for the  value of 4,5,6 we will get wednesday and not invalid for 1 and 2.
+// output : monday 
+
+
+
+
+// -----------------------------------------
+
+switch (true) {
+    case 19 > 7:
+        console.log("Hello");
+        break;
+    case 30 > 7:
+        console.log("Hey");
+        break;
+
+    default:console.log("Invalid")
         break;
 }
 
-// output : 
+// output: Hello
