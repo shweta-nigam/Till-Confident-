@@ -1,0 +1,1 @@
+// There are two types of loop , entry control type and exist control type.
