@@ -15,7 +15,7 @@ console.log(typeof a);  // ❌Number   // ✅ string
 
 console.log(Number(a));   // NaN
 console.log(typeof a);    // why is a variable still a string and not number ?
-
+//Because Number() only accepts strings that are 100% valid numeric formats:
 
 console.log(NaN === NaN);   // false
 

@@ -25,6 +25,19 @@ console.log(typeof (+ "90"));         // number
 
 console.log(+ "sb");                  // NaN
 
+//-------------------------------------
+
+let a = 1 + "a"
+console.log(a);   // 1a
+console.log(typeof a);  // ❌Number   // ✅ string
+
+console.log(Number(a));   // NaN
+console.log(typeof a);    // why is a variable still a string and not number ?
+ // Because Js could not convert it in Number as it is "1a"
+ // Because Number() only accepts strings that are 100% valid numeric formats:
+ // valid ex: "1" , "1.5", "-2" , "001" , "  12  " (spaces are okay), "1e3" (scientific)
+ // Invalid ex: "1a"  , "12px" , "10-20" , "2 5" , "--3", "seven"
+
  
 // 2. Sum and message 
 // 3. Accept and point the answer 
