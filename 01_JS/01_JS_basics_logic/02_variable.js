@@ -37,7 +37,7 @@ let c2
 // values can be changed if let is used 
 let p3 = 10
 p3 = 30
-console.log(p3)  // 3
+console.log(p3)  // 30
 
 // let can not be redeclared 
 let d2 = 2
@@ -49,7 +49,7 @@ console.log(d2);
 // const
 
 
-// b3 declared but not defined , aldo it can not be non-initialized
+// b3 declared but not defined , also it can not be non-initialized
 // const b3                       // 'const' declarations must be initialized.
 console.log(b3);              // SyntaxError: Missing initializer in const declaration
 b3 = 10
