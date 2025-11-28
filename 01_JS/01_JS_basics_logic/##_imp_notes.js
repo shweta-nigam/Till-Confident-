@@ -29,3 +29,26 @@ console.log(2 + 2 + 2);     // 6     → all numbers, so addition only
 
 // - Because of hoisting, variables declared with var are moved (“hoisted”) to the top of their scope — but not their values!
 // -🧩 let and const are also hoisted, but they live in the temporal dead zone — you can’t access them before they’re declared.
+
+
+
+
+// Theory :- operator , operand and operation
+
+// In JavaScript, as in many programming languages, these terms define how computations are performed:
+// Operator: An operator is a special symbol or keyword that performs an operation on one or more values (operands) and produces a result. Operators define the type of computation to be performed.
+
+//     let sum = 10 + 5; // '+' is the addition operator
+//     let isEqual = (a === b); // '===' is the strict equality operator
+// Operand: An operand is the value or expression on which an operator performs its action. Operands are the "inputs" to an operation.
+
+//     let x = 7;
+//     let y = 3;
+//     let result = x * y; // 'x' and 'y' are the operands for the multiplication operator '*'
+// Operation: An operation refers to the entire process of applying an operator to its operands to produce a result. It's the complete action being performed.
+
+//     let total = price + tax; // The entire expression 'price + tax' represents an addition operation.
+// In summary:
+// Operator: is the action or symbol that dictates what to do.
+// Operand: is the data or value on which the action is performed.
+// Operation: is the entire event of applying an operator to its operands to achieve a result.
