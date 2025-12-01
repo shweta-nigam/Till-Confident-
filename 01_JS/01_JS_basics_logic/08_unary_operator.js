@@ -1,4 +1,6 @@
-// unary operator
+// unary operator  
+// -------- applied on single operation
+// ex:- + - typeof ++ -- 
 //  ++  --
 let a = 10;
 let b = a++;
