@@ -50,7 +50,10 @@ console.log(Math.min(23,45,6,677));   // 6
 let a = [3,4,5,6,7,89]
 console.log(Math.max(a));  //NaN
 console.log(Math.min(a));  //NaN
-
+//Reason:- why NaN ?
+// [3, 4, 5,6,7,89] becomes the string "3,4,5,6,7,89"
+// Now it tries:
+// Number("3,4,5,6,7,89")   // ❌ Not a valid number → NaN
 
 // Math.random() :- give a random value between 0 - 1
 console.log(Math.random());   // 
