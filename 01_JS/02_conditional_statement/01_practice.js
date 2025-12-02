@@ -8,7 +8,7 @@ const age = Number(prompt("Enter your age"))        // NaN, if it is not a numbe
 // const age = prompt("Enter your age")            // number and string , both are treated as string
 console.log(age);
 
-// if(NaN === age){}             // not good as NaN === NaN is true
+// if(NaN === age){}             // not good as NaN === NaN is false
 
 if(isNaN(age)){
     console.log("Invalid input");  
@@ -28,7 +28,7 @@ else if (age >= 18) {
 
 // let amount = 10000
 
-// if (amount > 5000) {                          // Good practice is to always start from small amount.
+// if (amount > 5000) {                      // Good practice is to always start from small amount.(for these types)
 //     console.log("Amount payable", amount - ((amount * 5)/100) )
 // } else if(amount > 7000){
 //     console.log(`Amount paypal after 10% off ${amount - ((amount * 10)/100)}`)
