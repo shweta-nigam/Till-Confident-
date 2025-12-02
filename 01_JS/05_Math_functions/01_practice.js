@@ -37,7 +37,7 @@ console.log(randomInt);
 // 199932
 // This is not random enough for real OTP logic.
 
-// let OTP =  Math.floor(900000 + Math.random()*10000n0)   // not good
+// let OTP =  Math.floor(900000 + Math.random()*100000)   // not good
 let OTP = Math.floor(100000 + Math.random() * 900000);
 console.log(OTP);
 
