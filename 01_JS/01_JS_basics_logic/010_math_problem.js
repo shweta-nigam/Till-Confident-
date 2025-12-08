@@ -6,7 +6,7 @@
 
 //Q1 area and perimeter of rectangle
 // perimeter -> 2(l + b)
-// perimeter -> lb
+// area -> lb
 
 let l = 5;
 let b = 7;
