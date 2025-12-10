@@ -39,7 +39,8 @@ function rightAngleTriangle(n) {
   for (let i = 1; i <= n; i++) {
     let star = "";
     // for(let j = i; j > 0; j--){            // correct
-    for (let j = 1; j <= i; j++) {           // also correct and matches common cose style
+    for (let j = 1; j <= i; j++) {
+      // also correct and matches common cose style
       star += "*";
     }
     result += "\n" + star;
@@ -50,12 +51,12 @@ function rightAngleTriangle(n) {
 console.log(rightAngleTriangle(5));
 
 // js string repeat -- let star = "*".repeat(i);
-// ---- another way to print the triangle without using 2nd loop 
+// ---- another way to print the triangle without using 2nd loop
 function rightAngleTriangle2(n) {
   let result = "";
-  for (let i = 1; i <= n; i++) {       
-     let star = "*".repeat(i)
-    
+  for (let i = 1; i <= n; i++) {
+    let star = "*".repeat(i);
+
     result += "\n" + star;
   }
   return result;
@@ -67,33 +68,31 @@ console.log(rightAngleTriangle2(5));
 
 // 3️⃣ Print a reverse right-angle triangle
 
-function reverseRightAngleTriangle(n){
-    let result = ""
-    for(let i = n; i > 0; i--){
-        let star = ""
-        for(let j = i; j > 0; j-- ){
-            star += "*"
-        }
-         result += "\n" + star
+function reverseRightAngleTriangle(n) {
+  let result = "";
+  for (let i = n; i > 0; i--) {
+    let star = "";
+    for (let j = i; j > 0; j--) {
+      star += "*";
     }
-    return result
+    result += "\n" + star;
+  }
+  return result;
 }
 console.log(reverseRightAngleTriangle(5));
 
+// another way
 
-// another way 
-
-function reverseTri(n){
-    let result = ""
-for(let i = n; i > 0 ; i--){
-    let star = "*".repeat(i)
-    result += "\n" + star
-}
-return result
+function reverseTri(n) {
+  let result = "";
+  for (let i = n; i > 0; i--) {
+    let star = "*".repeat(i);
+    result += "\n" + star;
+  }
+  return result;
 }
 
 console.log(reverseTri(6));
-
 
 // -------------------------------
 // ⭐ LEVEL 2 — Learn spacing & alignment
@@ -103,7 +102,28 @@ console.log(reverseTri(6));
 //  ***
 // ****
 
+function rightAliTri(n) {
+  let result = "";
 
+  for (let i = 1; i <= n; i++) {
+    let star = "";
+    let space = "";
+
+    // space
+    for (let s = n - i; s > 0; s--) {
+      space += " ";
+    }
+
+    // star
+    for (let j = 1; j <= i; j++) {
+      star += "*";
+    }
+    result += "\n" + space + star;
+  }
+  return result;
+}
+
+console.log(rightAliTri(3));
 
 // Given n = 4.
 // This builds your spacing logic.
@@ -114,7 +134,6 @@ console.log(reverseTri(6));
 //   **
 //    *
 
-
 // Given n = 4.
 
 // ⭐ LEVEL 3 — Core Pattern-Thinking Begins
@@ -124,7 +143,6 @@ console.log(reverseTri(6));
 //  *****
 // *******
 
-
 // Given n = 4.
 // This teaches spaces + odd stars: (2*i - 1).
 
@@ -133,7 +151,6 @@ console.log(reverseTri(6));
 //  *****
 //   ***
 //    *
-
 
 // Given n = 4.
 // Helps with reverse loops.
@@ -145,7 +162,6 @@ console.log(reverseTri(6));
 // *   *
 // *****
 
-
 // Given n = 4.
 // Teaches conditional pattern logic.
 
@@ -155,7 +171,6 @@ console.log(reverseTri(6));
 //   *   *
 //  *     *
 // *********
-
 
 // Given n = 5.
 // Excellent for two-space gaps inside the shape.
@@ -168,7 +183,6 @@ console.log(reverseTri(6));
 //  *****
 //   ***
 //    *
-
 
 // Given n = 4.
 
