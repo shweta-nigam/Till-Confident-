@@ -136,6 +136,26 @@ console.log(rightAliTri(3));
 
 // Given n = 4.
 
+function leftAliRevTri(n) {
+  let result = "";
+
+  for (let i = n; i > 0; i--) {
+    let star = "";
+    let space = "";
+    // space
+    for (let s = n - i; s > 0; s--) {
+      space += " ";
+    }
+    // star
+    for (let j = 1; j <= i; j++) {
+      star += "*";
+    }
+    result += "\n" + space + star;
+  }
+  return result
+}
+console.log(leftAliRevTri(4));
+
 // ⭐ LEVEL 3 — Core Pattern-Thinking Begins
 // 6️⃣ Print a centered equilateral (pyramid)
 //    *
@@ -146,6 +166,30 @@ console.log(rightAliTri(3));
 // Given n = 4.
 // This teaches spaces + odd stars: (2*i - 1).
 
+function pyramid(n){
+  let result = ""
+
+  for(let i = 1; i <= n; i++){
+    let star = ""
+    let space = ""
+
+    //space
+    for(let s = n-i; s > 0; s--){
+      space += " "
+    }
+
+    // star
+    for(let j = 1; j <= (2*i -1); j++){
+      star += "*"
+    }
+    result += "\n" + space + star
+  }
+  return result
+}
+console.log(pyramid(4));
+
+
+
 // 7️⃣ Print an inverted centered pyramid
 // *******
 //  *****
@@ -154,6 +198,10 @@ console.log(rightAliTri(3));
 
 // Given n = 4.
 // Helps with reverse loops.
+
+
+
+
 
 // ⭐ LEVEL 4 — Mixed Logic (Spacing + Stars)
 // 8️⃣ Print a hollow square
