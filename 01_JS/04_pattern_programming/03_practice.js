@@ -152,7 +152,7 @@ function leftAliRevTri(n) {
     }
     result += "\n" + space + star;
   }
-  return result
+  return result;
 }
 console.log(leftAliRevTri(4));
 
@@ -166,29 +166,27 @@ console.log(leftAliRevTri(4));
 // Given n = 4.
 // This teaches spaces + odd stars: (2*i - 1).
 
-function pyramid(n){
-  let result = ""
+function pyramid(n) {
+  let result = "";
 
-  for(let i = 1; i <= n; i++){
-    let star = ""
-    let space = ""
+  for (let i = 1; i <= n; i++) {
+    let star = "";
+    let space = "";
 
     //space
-    for(let s = n-i; s > 0; s--){
-      space += " "
+    for (let s = n - i; s > 0; s--) {
+      space += " ";
     }
 
     // star
-    for(let j = 1; j <= (2*i -1); j++){
-      star += "*"
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      star += "*";
     }
-    result += "\n" + space + star
+    result += "\n" + space + star;
   }
-  return result
+  return result;
 }
 console.log(pyramid(4));
-
-
 
 // 7️⃣ Print an inverted centered pyramid
 // *******
@@ -199,19 +197,60 @@ console.log(pyramid(4));
 // Given n = 4.
 // Helps with reverse loops.
 
+function reversePyramid(n) {
+  let result = "";
 
+  for (let i = n; i > 0; i--) {
+    let star = "";
+    let space = "";
 
+    for (let s = n - i; s > 0; s--) {
+      space += " ";
+    }
 
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      star += "*";
+    }
+    result += "\n" + space + star;
+  }
+  return result;
+}
+
+console.log(reversePyramid(4));
 
 // ⭐ LEVEL 4 — Mixed Logic (Spacing + Stars)
 // 8️⃣ Print a hollow square
-// *****
-// *   *
-// *   *
-// *****
+// ****
+// *  *
+// *  *
+// ****
 
 // Given n = 4.
 // Teaches conditional pattern logic.
+
+function hollowSquare(n) {
+  let result = "";
+  for (let i = 1; i <= n; i++) {
+    let star = "";
+    let space = "";
+
+    // space
+    for (let s = 1; s <= 1; s++) {
+      space += " ";
+    }
+
+    for (let j = 1; j <= n; j++) {
+      if (i !== 1 && i !== n && j !== 1 && j !== n) {
+        space += " ";
+      }
+      star += "*";
+    }
+    result += "\n" + star + space;
+  }
+
+  return result;
+}
+console.log(hollowSquare(4));
 
 // 9️⃣ Print a hollow pyramid
 //     *
