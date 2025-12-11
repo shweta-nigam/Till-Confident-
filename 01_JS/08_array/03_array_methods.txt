@@ -1,0 +1,185 @@
+🎯 First: The Golden Rule (Memory Trick)
+
+Arrays are like kitchen shelves.
+
+Some methods are “Peaceful Guests” → they don’t touch your shelf, only show you something or give you a copy.
+
+Some are “Chaotic Guests” → they change your shelf directly.
+
+Some are “Delivery Boys” → they return new items without messing with your shelf.
+
+Remember this table:
+
+CATEGORY	WHAT THEY DO	TYPE OF GUEST
+Mutating Methods	Change original array	Chaotic Guests 😈
+Non-Mutating Methods	Don’t change original	Peaceful Guests 😇
+Create new array	Give new array	Delivery Boys 🚚
+😈 MUTATING METHODS (They change the original array)
+
+Think of them like people who come into your house and rearrange your furniture without asking.
+
+1. push()
+
+👉 Adds items at the end.
+😈 Changes original.
+
+Think: “PUSH more things inside my shelf from the back.”
+
+let a = [1,2];
+a.push(3); // a becomes [1,2,3]
+
+2. pop()
+
+👉 Removes from end.
+😈 Changes original.
+
+Think: “POP the last item off the shelf.”
+
+3. shift()
+
+👉 Removes from front.
+😈 Changes original.
+
+Think: “SHIFT the first item away.”
+
+4. unshift()
+
+👉 Adds items at front.
+😈 Changes original.
+
+Think: “UN-SHIFT by inserting items at start.”
+
+5. splice()
+
+👉 Add/Remove/Replace anywhere.
+😈 The MOST chaotic method.
+
+Think: “SP-LICE = Surgeon. Cuts and stitches your array.”
+
+6. sort()
+
+👉 Sorts array alphabetically by default.
+😈 Mutates AND confuses beginners.
+
+Think: “SORT is that friend who rearranges your room ‘for your own good.’”
+
+7. reverse()
+
+👉 Reverses array in place.
+😈 Flips your shelf upside-down.
+
+😇 NON-MUTATING METHODS (They don’t change original)
+
+Peaceful monks. They just observe and give you information.
+
+1. slice()
+
+👉 Gives a piece of the array without modifying the original.
+
+Think:
+“SLICE the cake and give me a piece, but don’t touch the cake.”
+
+let a = [1,2,3,4];
+let b = a.slice(1,3); // [2,3]
+
+2. concat()
+
+👉 Combines arrays and returns a new array.
+
+Think:
+“CONCAT = Gently join hands, no one gets hurt.”
+
+3. includes()
+
+👉 Checks if value exists.
+
+Think:
+“Is this item included on my shelf?”
+
+4. indexOf()
+
+👉 Finds index of item.
+
+Think:
+“Where is this item located?”
+
+5. join()
+
+👉 Converts array → string.
+
+Think:
+“JOIN everyone together with a separator.”
+
+🚚 METHODS THAT RETURN NEW ARRAYS (Functional heroes)
+
+These are the delivery boys — they bring back a new modified array but don’t touch the old one.
+
+1. map()
+
+👉 Apply a function to each element → return new array.
+
+Think:
+“MAP = Everyone changes their outfit, but ORIGINAL people remain.”
+
+[1,2,3].map(x => x * 2); // [2,4,6]
+
+2. filter()
+
+👉 Keeps only values that pass a test.
+
+Think:
+“FILTER = Only allow cool people in the club.”
+
+[1,2,3,4].filter(x => x % 2 === 0); // [2,4]
+
+3. reduce()
+
+👉 Reduces array to one value.
+
+Think:
+“REDUCE = Make a smoothie out of all fruits.”
+
+4. flat()
+
+👉 Flattens nested arrays like unrolling a bedsheet.
+
+5. flatMap()
+
+👉 map() + flat() (depth 1)
+
+Think:
+“Flip and flatten in one go.”
+
+🧠 HOW TO NEVER FORGET AGAIN
+
+Use this short rule:
+
+✔ If the method sounds violent → it mutates
+
+push, pop, shift, unshift, splice, sort, reverse
+
+✔ If the method sounds calm or “intellectual” → no mutation
+
+slice, concat, includes, indexOf, find
+
+✔ If it sounds like magic transformation → returns NEW array
+
+map, filter, reduce, flat, flatMap
+
+🎉 SUPER SHORT SUMMARY
+Method	Mutates?	Quick Meaning
+push	✔	add end
+pop	    ✔	remove end
+shift	✔	remove front
+unshift	✔	add front
+splice	✔	add/remove anywhere
+sort	✔	sort array
+reverse	✔	flip it
+slice	✘	copy part
+concat	✘	join arrays
+includes✘	contains?
+map  	✘	transform items
+filter	✘	keep some
+reduce	✘	combine all
+find	✘	first matching
+flat	✘	flatten nested
