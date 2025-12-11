@@ -228,29 +228,56 @@ console.log(reversePyramid(4));
 // Given n = 4.
 // Teaches conditional pattern logic.
 
-function hollowSquare(n) {
-  let result = "";
-  for (let i = 1; i <= n; i++) {
-    let star = "";
-    let space = "";
+// function hollowSquare(n) {
+//   let result = "";
+//   for (let i = 1; i <= n; i++) {
+//     let star = "";
+//     let space = "";
 
-    // space
-    for (let s = 1; s <= 1; s++) {
-      space += " ";
-    }
+//     // space
+//     for (let s = 1; s < n; s++) {
+//       space += " ";
+//     }
+
+//     // if i & j !==1 and i & j !== n print space
+//     for (let j = 1; j <= n; j++) {
+//       if (i !== 1 && i !== n && j !== 1 && j !== n) {
+//         space += " ";
+//       }
+//       // otherwise space
+//         star += "*";
+//     }
+//     result += "\n" + star + space;
+//   }
+
+//   return result;
+// }
+
+function hollowSquare(n) {        // good now
+  let result = "";
+
+  for (let i = 1; i <= n; i++) {
+    // let star = "";
+    // let space = "";
+    let row = "";
 
     for (let j = 1; j <= n; j++) {
-      if (i !== 1 && i !== n && j !== 1 && j !== n) {
-        space += " ";
+      if (i === 1 || i === n || j === 1 || j === n) {
+        // star += "*";
+        row += "*";
+      } else {
+        // space += " ";
+        row += " ";
       }
-      star += "*";
     }
-    result += "\n" + star + space;
+    result += "\n" + row;
   }
-
   return result;
 }
+
 console.log(hollowSquare(4));
+
+// if even on condition out of i === 1 , i === n , j === 1 and j === n is true that becomes border, and each border has star whereas if it is not then it is a space.
 
 // 9️⃣ Print a hollow pyramid
 //     *
