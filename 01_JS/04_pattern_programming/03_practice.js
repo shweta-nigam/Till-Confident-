@@ -330,6 +330,43 @@ console.log(hollowPyramid(5));
 
 // Given n = 4.
 
+function diamond(n){
+  let result = ""
+
+  // upper part
+  for(let i = 1; i <= n ; i++){
+    let star = ""
+    let space = " "
+
+    for(let s = n-i; s >0 ; s--){
+      space += " "
+    }
+
+    for(let j = 1; j <= 2*i - 1; j++){
+      star += "*"
+    }
+    result += "\n" + space + star
+  }
+
+  // bottom part
+  for(let i = n; i > 0 ; i--){
+    let star = ""
+    let space = " "
+
+    for(let s = n-i; s > 0 ; s--){
+      space += " "
+    }
+
+    for(let j = 1; j <= 2*i - 1; j++){
+      star += "*"
+    }
+    result += "\n" + space + star
+  }
+  return result
+} 
+
+console.log(diamond(8));
+
 // This is the grand challenge because it combines:
 // forward pyramid
 // inverted pyramid
