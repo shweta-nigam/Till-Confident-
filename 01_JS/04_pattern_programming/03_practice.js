@@ -253,7 +253,8 @@ console.log(reversePyramid(4));
 //   return result;
 // }
 
-function hollowSquare(n) {        // good now
+function hollowSquare(n) {
+  // good now
   let result = "";
 
   for (let i = 1; i <= n; i++) {
@@ -288,6 +289,35 @@ console.log(hollowSquare(4));
 
 // Given n = 5.
 // Excellent for two-space gaps inside the shape.
+
+function hollowPyramid(n) {
+  let result = "";
+
+  for (let i = 1; i <= n; i++) {
+    let row = "";
+    let space = "";
+
+    for (let s = n - i; s > 0; s--) {
+      space += " ";
+    }
+
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      if (i === n  || j === 1 || j === 2*i -1) {
+        row += "*";
+      } else {
+        row += " ";
+      }
+    }
+
+    result += "\n" + space + row;
+  }
+  return result;
+}
+console.log(hollowPyramid(5));
+//Note: For a hollow pyramid:
+// - top and bottom border stars are decided by i. i ===n print star.
+// - left and right borders are decided by j and not i. j === 1 or j === 2*i -1.
+// still confusion with why j === 2*i -1
 
 // 🔟 Print a diamond
 //    *
