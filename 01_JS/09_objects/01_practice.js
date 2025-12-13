@@ -86,7 +86,7 @@ let p3 =  {
 name : "Sam",
 age: 34,
 state: {
-    city:Delhi,
+    city:"Delhi",
     pin:110089
 }
 }
@@ -95,3 +95,20 @@ console.log(p3.states?.city);
 console.log(p3.states.city);  // would expect error -> ReferenceError: Delhi is not defined
 console.log(p3.state?.city);
 
+
+//----------------------------------------------------
+// computed properties
+
+let role = "admin"
+
+let p4 =  {
+name : "Sam",
+age: 34,
+state: {
+    city:"Delhi",
+    pin:110089
+},
+[role]:"same"
+}
+
+console.log(p4);
