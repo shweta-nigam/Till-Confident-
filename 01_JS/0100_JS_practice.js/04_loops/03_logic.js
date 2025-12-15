@@ -115,8 +115,24 @@ console.log(largestNum3(3457));
 // 5. Find the smallest digit in a number.
 //    Example: 9462 → 2
 
+function smallestNum(n){             // ✅
+    let smallestN = 9
+    while(n>0){
+        let rem = n%10;
+        n = Math.floor(n/10)
+        if(rem < smallestN){
+            smallestN = rem
+        }
+    }
+    return smallestN
+}
+console.log(smallestNum(1034));
+
 // 6. Check if a number is a palindrome.
 //    Example: 121 → true, 123 → false
+
+
+
 
 // 7. Print the multiplication table of a number.
 //    Example: 5 → 5×1 = 5 … 5×10 = 50
