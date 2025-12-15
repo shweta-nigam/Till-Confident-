@@ -104,34 +104,67 @@ function largestNum3(n) {
     let rem = n % 10;
     n = Math.floor(n / 10);
     if (rem > lNum) {
-        lNum = rem
+      lNum = rem;
     }
   }
-  return lNum
+  return lNum;
 }
 console.log(largestNum3(3457));
-
 
 // 5. Find the smallest digit in a number.
 //    Example: 9462 → 2
 
-function smallestNum(n){             // ✅
-    let smallestN = 9
-    while(n>0){
-        let rem = n%10;
-        n = Math.floor(n/10)
-        if(rem < smallestN){
-            smallestN = rem
-        }
+function smallestNum(n) {
+  // ✅
+  let smallestN = 9;
+  while (n > 0) {
+    let rem = n % 10;
+    n = Math.floor(n / 10);
+    if (rem < smallestN) {
+      smallestN = rem;
     }
-    return smallestN
+  }
+  return smallestN;
 }
 console.log(smallestNum(1034));
 
 // 6. Check if a number is a palindrome.
 //    Example: 121 → true, 123 → false
 
+function palindrome(n) {              //solution works but has many loopholes 
+if(n=== null || n === undefined) return false;
+if(isNaN(Number(n))) return false;
 
+  let newN = "";
+  let originalNum = n;
+  while (n > 0) {
+    let rem = n % 10;
+    n = Math.floor(n / 10);
+    newN += rem;
+  }
+  if (originalNum === Number(newN)) {
+    return true;
+  }
+  return false;
+}
+console.log(palindrome(9889));      // true
+console.log(palindrome("9889"));      // true
+console.log(palindrome("89h"));      // false
+
+//note:  Number(new) -> to convert string to number for strict comparison.
+// Note: Deep thinking and edge case 
+
+// a. leading zeros break logic 
+// console.log(palindrome(010));   // JS parses it as octal or decimal depending on mode
+console.log(palindrome("010")); //  logic may return false
+// Original: "010"
+// Reversed: "010" → number 10
+// Comparison: "010" === 10 → false
+// This is a deeper conceptual bug.
+
+//b. check fails for input 0
+// when palindrom(0) then while(n>0) loop never run but 0 === Number("") → true
+// This is accidentally correct, not logically correct. 
 
 
 // 7. Print the multiplication table of a number.
