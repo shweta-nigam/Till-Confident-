@@ -1,0 +1,20 @@
+THE DOM - Document Object Model
+learn :-
+- DOM tree structure: node, element, text, comment
+- selecting elements: getELementById, getElementByCLassName, querySelector, querySelectorAll
+- Text/content access: innerText, textContent , innerHtml
+- Attribute manipulation: getAttribute , removeAttribute
+- Dynamic DOM manipulation: createElement, appendChild , removeChild, prepend
+- Style updates via .style and classList(add, remove, toggle)
+
+Confusion:
+- DIfference between innerText vs textContent vs innerHtml
+- live HTMLCollection vs static NodeList
+
+Mindset:
+- DOM is the page's brain - use it responsibly
+
+practice:
+
+
+// DOM manipulation - The thing we lean and implement is not DOM but DOM manipulation.
