@@ -5,6 +5,27 @@
 //      ***
 //       *
 
+function invertedPyramid(n) {   // works
+  let result = "";
+  for (let i = n; i > 0; i--) {
+    let star = "";
+    let space = "";
+    // space
+    for (let s = n-i; s > 0; s--) {  
+      space += " ";
+    }
+
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      star += "*";
+    }
+    result += "\n" + space + star;
+  }
+  return result
+}
+console.log(invertedPyramid(4));
+
+
+
 // 2. PRINT A HOLLOW INVERTED PYRAMID
 //    Example (n = 4):
 //    *******
@@ -81,4 +102,4 @@
 //        1
 //       121
 //      12321
-    // 1234321
+// 1234321
