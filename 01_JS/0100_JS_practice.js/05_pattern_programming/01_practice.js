@@ -5,13 +5,14 @@
 //      ***
 //       *
 
-function invertedPyramid(n) {   // works
+function invertedPyramid(n) {
+  // works
   let result = "";
   for (let i = n; i > 0; i--) {
     let star = "";
     let space = "";
     // space
-    for (let s = n-i; s > 0; s--) {  
+    for (let s = n - i; s > 0; s--) {
       space += " ";
     }
 
@@ -20,11 +21,9 @@ function invertedPyramid(n) {   // works
     }
     result += "\n" + space + star;
   }
-  return result
+  return result;
 }
 console.log(invertedPyramid(4));
-
-
 
 // 2. PRINT A HOLLOW INVERTED PYRAMID
 //    Example (n = 4):
@@ -32,6 +31,28 @@ console.log(invertedPyramid(4));
 //     *   *
 //      * *
 //       *
+
+function invertedHollowPyramid(n) {
+  let result = "";
+  for (let i = n; i > 0; i--) {
+    let row = "";
+
+    for (let s = n - i; s > 0; s--) {
+      row += " ";
+    }
+
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      if(i===n || j === 2*i - 1 || j === 1){
+        row += "*";
+      } else {
+        row += " "
+      }
+    }
+    result +="\n" + row;
+  }
+  return result;
+}
+console.log(invertedHollowPyramid(4));
 
 // 3. PRINT A FULL DIAMOND (SOLID)
 //    Example (n = 3):
