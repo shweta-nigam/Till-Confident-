@@ -17,3 +17,5 @@ document.querySelector("body").prepend(h1)
 // They do NOT clone
 
 //---------------------------------------------------------------
+let h1 = document.querySelector("h1")
+h1.remove()
