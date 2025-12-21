@@ -1,5 +1,6 @@
 // Array :- Array is linear data-structure which stores multiple values in a continuous manner.
-// linear -> one by one
+// linear ->  elements are accessed using a single index (0, 1, 2, ...)
+
 
 let arr = new Array(3);
 
@@ -13,7 +14,7 @@ arr[8] = 30;
 
 console.log(arr); // [ 4, 5, 6, 7, <4 empty items>, 30 ]
 
-// note: there is not such thing as fixed length of array in js even after defining it with new Array(n).
+// note: there is no such thing as fixed length of array in js even after defining it with new Array(n).
 
 //------------------------------
 let a = new Array(3);
