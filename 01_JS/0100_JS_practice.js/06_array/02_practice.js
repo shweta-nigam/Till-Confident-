@@ -52,7 +52,7 @@ function leftRotationByKNum(arr, k) {  // works but not optimized yet!
 console.log(leftRotationByKNum([1, 2, 3, 4, 5], 3));
 
 //4. Right rotation by K element.
-function rightRotationByKNum(arr, k) {
+function rightRotationByKNum(arr, k) {   // work but not optimized even now.
     k = k % arr.length
 for(let i = 1; i <= k; i++){
     let last = arr[arr.length - 1];

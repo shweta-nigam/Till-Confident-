@@ -64,7 +64,4 @@ function reverse(i,j){
     }
 }
 
-//4 do right rotation by k number
 
-
-//5. remove duplicates from sorted array
