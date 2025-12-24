@@ -95,3 +95,24 @@ let maxProfit = function(prices) {
 console.log(maxProfit([1,2,3,3,8]));
 
 //5. sort the color - leetcode
+// num represent colors
+
+function d(){     // not working
+  let arr = [1,2,0,0,1,2,2,1,1,0,0]
+  let i = j = 0
+  let k = arr.length -1
+  while(i < k){
+ if(arr[i] === 0){
+  arr[i] = arr[j]
+  i++
+  j++
+ } else if(arr[i] === 2){
+  arr[i] = arr[k]
+  k--
+ } else i++
+  }
+  console.log(arr);
+}
+d()
+
+//6. Maximum subarray/ kadane's algorithm
