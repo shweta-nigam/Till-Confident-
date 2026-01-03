@@ -39,9 +39,55 @@ let heading = document.querySelector("#heading");
 console.dir(heading);
 heading.innerText = "Do it now!"
 
-//9. Task2 Select all <li> elements ans print their text using a loop.
+//9. Task2 -> Select all <li> elements ans print their text using a loop.
 
 let lis = document.querySelectorAll("li")
 lis.forEach(function (value){
     console.log(value.textContent)
 })
+
+// or
+
+for(let i = 0 ; i < lis.length; i++){
+    console.log(lis[i].textContent);
+}
+
+//10. What's difference between the innerText, textContent. and innerHtml ?
+
+//ans.  
+//- innerText and textContent are very similar. prints <li> hi </li> exactly
+//- different from other 2 and convert <li> hi </li> in list
+
+//innerHTML → HTML
+// textContent → All text    // fastest and latest than innerText
+// innerText → Visible text
+
+//11. Which is better to use between innerText and textContent? 
+// ans.  textContent
+
+//12. Task3 -> Select a paragraph and replace its content with:
+// <b>Update </b> by Javascript
+
+let replace = document.querySelector("#replace")
+replace.innerHTML = "<b>Update </b> by Javascript"
+
+//13. How do you get the scr of the image using javascript ?
+
+let img = document.querySelector("img")
+console.log(img.getAttribute("src"));
+
+//14. What does setAttribute do ?
+// - sets the attribute to the element.
+img.setAttribute("alt", "image")
+console.log(img);
+
+//15. Select a link and update its href to point to https://www.google.com
+
+let link = document.querySelector("a")
+link.setAttribute("href", "https://www.google.com") 
+// or
+link.href = "https://www.google.com"
+
+//16. Add a title attribute to a div dynamically
+
+document.getElementsByTagName("div")
