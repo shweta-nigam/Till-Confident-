@@ -25,3 +25,24 @@ return j
 }
 console.log(removeDuplicates([1,1,2,3,3]));           // 3 - unique elements
 console.log(removeDuplicates([1,1,2,3,3,5,6,7,7,7,7]));   // 6
+
+
+
+// 2. Merge sorted array
+
+function merge(arr1,arr2){                  // not optimized (but solved it!)
+    let arr = [...arr1, ...arr2]
+    arr.sort((a,b) => a - b)
+    return arr
+}
+console.log(merge([1,3,9,22,],[4,7,8]));    // [1,3,4,7,8,9,22]
+
+// 2.1 Merge sorted array
+
+function merge(arr1,arr2){                 
+    let arr = new Array(arr1.length + arr2.length)
+    let j = 0;
+    let i = 0;
+    
+}
+console.log(merge([1,3,9,22,],[4,7,8])); 
