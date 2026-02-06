@@ -11,7 +11,8 @@ Below is a screenshot of the recreated UI:
 
 ![Mintlify Clone Screenshot](./assets/ss.png)
 
-(Add your screenshot image in the project root and name it `screenshot.png`.)
+## Live Demo
+https://github.com/shweta-nigam/mintlify-clone
 
 ---
 
