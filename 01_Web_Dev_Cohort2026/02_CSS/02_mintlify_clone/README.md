@@ -12,7 +12,7 @@ Below is a screenshot of the recreated UI:
 ![Mintlify Clone Screenshot](./assets/ss.png)
 
 ## Live Demo
-https://github.com/shweta-nigam/mintlify-clone
+https://shweta-nigam.github.io/mintlify-clone
 
 ---
 
