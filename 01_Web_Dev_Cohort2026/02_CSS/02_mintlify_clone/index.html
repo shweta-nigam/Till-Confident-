@@ -1,58 +1,356 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mintlify Clone</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mintlify Clone</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Top Navbar -->
+    <main>
+      <div class="hero-wrapper">
+        <header class="navbar">
+          <div class="logo">
+            <img src="assets/mintlify-icon.svg" />
+            <p>mintlify</p>
+          </div>
+          <nav>
+            <a href="#">Resources</a>
+            <a href="#">Documentation</a>
+            <a href="#">Customers</a>
+            <a href="#">Blog</a>
+            <a href="#">Pricing</a>
+          </nav>
+          <div class="right-navbar">
+            <button>Contact sales</button>
+            <button>Start for free</button>
+          </div>
+        </header>
 
-  <!-- Top Navbar -->
-  <header class="navbar">
-    <div class="logo">Mintlify</div>
-    <nav>
-      <a href="#">Docs</a>
-      <a href="#">Pricing</a>
-      <a href="#">Blog</a>
-    </nav>
-  </header>
+        <!-- hero section -->
+        <section id="hero-section">
+          <div class="hero-cta">
+            <p>
+              <span id="hero-cta-badge">New</span>Self updating docs with agent
+              suggestions<span> ⫸ </span>
+            </p>
+          </div>
 
-  <!-- Main Layout -->
-  <div class="container">
+          <h1>
+            <span>The Intelligent</span>
+            <span>Knowledge Platform</span>
+          </h1>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <h4>Getting Started</h4>
-      <a class="active" href="#">Introduction</a>
-      <a href="#">Installation</a>
-      <a href="#">Quickstart</a>
+          <h2>
+            <span>Helping teams create and maintain world-class</span>
+            <span>documentation built for both humans and AI</span>
+          </h2>
 
-      <h4>Core Concepts</h4>
-      <a href="#">Navigation</a>
-      <a href="#">Themes</a>
-      <a href="#">Deployment</a>
-    </aside>
+          <div class="input-sec">
+            <input type="email" placeholder="Email address" />
+            <button>Start now</button>
+          </div>
 
-    <!-- Content -->
-    <main class="content">
-      <h1>Introduction</h1>
-      <p>
-        Mintlify helps you build beautiful documentation with minimal effort.
-      </p>
+          <img
+            class="hero-img"
+            src="https://www.mintlify.com/hero/hero-image-dark.svg"
+            alt="image of product"
+          />
+        </section>
+      </div>
 
-      <h2>Installation</h2>
-      <pre><code>npm install mintlify</code></pre>
+      <section id="logo-wall">
+        <div class="container-l-wall">
+          <img src="./assets/logo-wall.png" />
+        </div>
+      </section>
 
-      <h2>Why Mintlify?</h2>
-      <ul>
-        <li>Beautiful defaults</li>
-        <li>Fast setup</li>
-        <li>Great developer experience</li>
-      </ul>
+      <section class="intelligence-section">
+        <div class="intelligence-header">
+          <h2 class="intelligence-title">Built for the intelligence age</h2>
+          <p class="intelligence-description">
+            Integrate AI into every part of your docs lifecycle. Woven into how
+            your knowledge is written, maintained, and understood by both users
+            and LLMs.
+          </p>
+        </div>
+
+        <div class="intelligence-features">
+          <!-- Feature card -->
+          <article class="feature-card">
+            <span class="feature-eyebrow">LLMS.TXT & MCP</span>
+            <h3 class="feature-title">Built for both people and AI</h3>
+            <p class="feature-description">
+              Ensure your product shows up in the AI workflows users already
+              rely on. We support llms.txt, MCP, and whatever comes next.
+            </p>
+
+            <div class="feature-visual">
+              <!-- image / svg -->
+            </div>
+          </article>
+
+          <!-- Feature card -->
+          <article class="feature-card">
+            <span class="feature-eyebrow">AGENT</span>
+            <h3 class="feature-title">Self-updating knowledge management</h3>
+            <p class="feature-description">
+              Draft, edit, and maintain content with a context-aware agent. Move
+              faster and more consistently without the documentation debt.
+            </p>
+
+            <div class="feature-visual">
+              <!-- image / svg -->
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="enterprise-section">
+        <div class="enterprise-header">
+          <span class="enterprise-eyebrow">ENTERPRISE REINVENTION</span>
+
+          <div class="enterprise-heading-row">
+            <div class="enterprise-text">
+              <h2 class="enterprise-title">
+                Bring intelligence to<br />
+                enterprise knowledge
+              </h2>
+              <p class="enterprise-description">
+                Modernize without the rebuild with enterprise-grade professional
+                service & security.
+              </p>
+            </div>
+
+            <a href="#" class="enterprise-cta">Explore for enterprise</a>
+          </div>
+        </div>
+
+        <div class="enterprise-features">
+          <div class="enterprise-feature">
+            <div class="feature-icon">
+              <!-- icon placeholder -->
+            </div>
+            <h3 class="feature-title">Build with partnership</h3>
+            <p class="feature-description">
+              Direct, white-glove access to our documentation experts. Dedicated
+              migration support and guidance tailored to your setup, and
+              elevated support SLAs.
+            </p>
+          </div>
+
+          <div class="enterprise-feature">
+            <div class="feature-icon">
+              <!-- icon placeholder -->
+            </div>
+            <h3 class="feature-title">Compliance and access control</h3>
+            <p class="feature-description">
+              Compliant with SOC 2, and in the process for ISO/27001 and GDPR
+              compliance to meet your internal and external data requirements.
+              Secure access and provisioning with SAML-based SSO.
+            </p>
+          </div>
+        </div>
+
+        <div class="enterprise-story">
+          <div class="story-content">
+            <span class="story-eyebrow">CUSTOMER STORY</span>
+            <h3 class="story-title">
+              See how Anthropic accelerates<br />
+              AI development with Mintlify
+            </h3>
+            <a href="#" class="story-link">Read story →</a>
+          </div>
+
+          <div class="story-visual">
+            <!-- image placeholder -->
+          </div>
+        </div>
+      </section>
+
+      <!-- customer section -->
+      <section class="customers-section">
+        <div class="customers-header">
+          <span class="customers-eyebrow">CUSTOMERS</span>
+          <h2 class="customers-title">Unlock knowledge for any industry</h2>
+          <p class="customers-description">
+            From frontier AI companies to consumer brands, leaders across
+            industries scale with Mintlify.
+          </p>
+        </div>
+
+        <div class="customers-cards">
+          <!-- Card 1 -->
+          <article class="customer-card">
+            <div class="customer-visual">
+              <!-- image placeholder -->
+            </div>
+            <p class="customer-summary">
+              How Perplexity transformed its documentation into an AI-native
+              developer experience that matches th...
+            </p>
+            <a href="#" class="customer-link">Read story →</a>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="customer-card">
+            <div class="customer-visual">
+              <!-- image placeholder -->
+            </div>
+            <p class="customer-summary">
+              How X is using Mintlify to power the developer experience for the
+              global town square
+            </p>
+            <a href="#" class="customer-link">Read story →</a>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="customer-card">
+            <div class="customer-visual">
+              <!-- image placeholder -->
+            </div>
+            <p class="customer-summary">
+              How Kalshi helps developers discover what's possible faster and
+              ultimately drive broader...
+            </p>
+            <a href="#" class="customer-link">Read story →</a>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="customer-card">
+            <div class="customer-visual">
+              <!-- image placeholder -->
+            </div>
+            <p class="customer-summary">
+              How Cognition scaled their documentation to mirror their product
+              ethos
+            </p>
+            <a href="#" class="customer-link">Read story →</a>
+          </article>
+        </div>
+
+        <div class="customers-pagination">
+          <button class="pagination-btn">‹</button>
+          <button class="pagination-btn active">›</button>
+        </div>
+      </section>
+
+      <!-- cta section -->
+      <section class="cta-section">
+        <div class="cta-content">
+          <h2 class="cta-title">
+            Make documentation<br />
+            your winning advantage
+          </h2>
+
+          <p class="cta-description">
+            Join the leaders of tomorrow to future proof your documentation
+            today.
+          </p>
+
+          <div class="cta-actions">
+            <a href="#" class="cta-btn primary">Get started for free</a>
+            <a href="#" class="cta-btn secondary">Get a demo</a>
+          </div>
+
+          <div class="cta-features">
+            <div class="cta-feature">
+              <div class="cta-icon">
+                <!-- icon placeholder -->
+              </div>
+              <h3 class="cta-feature-title">Pricing on your terms</h3>
+              <p class="cta-feature-desc">
+                Pick the plan that works best for you
+              </p>
+              <a href="#" class="cta-link">Pricing details →</a>
+            </div>
+
+            <div class="cta-divider"></div>
+
+            <div class="cta-feature">
+              <div class="cta-icon">
+                <!-- icon placeholder -->
+              </div>
+              <h3 class="cta-feature-title">Start building</h3>
+              <p class="cta-feature-desc">
+                Deploy your documentation in minutes
+              </p>
+              <a href="#" class="cta-link">Quickstart →</a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
-  </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <!-- Top row -->
+        <div class="footer-top">
+          <div class="footer-brand">
+            <span class="brand-logo">mintlify</span>
+          </div>
 
-</body>
+          <div class="footer-socials">
+            <span class="social-icon">in</span>
+            <span class="social-icon">x</span>
+            <span class="social-icon">gh</span>
+          </div>
+        </div>
+
+        <!-- Links grid -->
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Explore</h4>
+            <a href="#">Startups</a>
+            <a href="#">Enterprise</a>
+            <a href="#">Switch</a>
+            <a href="#">OSS Program</a>
+          </div>
+
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <a href="#">Customers</a>
+            <a href="#">Blog</a>
+            <a href="#">Pricing</a>
+            <a href="#">Guides</a>
+            <a href="#">Feature Requests</a>
+          </div>
+
+          <div class="footer-column">
+            <h4>Documentation</h4>
+            <a href="#">Getting Started</a>
+            <a href="#">API Reference</a>
+            <a href="#">Components</a>
+            <a href="#">Changelog</a>
+          </div>
+
+          <div class="footer-column">
+            <h4>Company</h4>
+            <a href="#">Careers</a>
+            <a href="#">Wall of Love</a>
+          </div>
+
+          <div class="footer-column">
+            <h4>Legal</h4>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Responsible Disclosure</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Security</a>
+            <a href="#">DSR/DSAR</a>
+          </div>
+        </div>
+
+        <!-- Bottom row -->
+        <div class="footer-bottom">
+          <div class="footer-security">
+            <span>Backed by Enterprise-Grade Security</span>
+            <span class="security-badge">SOC 2</span>
+          </div>
+
+          <div class="footer-copy">© 2026 Mintlify, Inc.</div>
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>
