@@ -212,11 +212,6 @@ h1 span {
   min-height: 420px;
 
   border-radius: 20px;
-  background: radial-gradient(
-    120% 120% at 50% 0%,
-    rgba(255, 255, 255, 0.06),
-    rgba(255, 255, 255, 0.02)
-  );
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -243,26 +238,43 @@ h1 span {
 
 .feature-visual {
   margin-top: 32px;
-  height: 180px;
   border-radius: 14px;
-  background-color: rgba(255, 255, 255, 0.05);
 }
-
-@media (max-width: 900px) {
-  .intelligence-features {
-    grid-template-columns: 1fr;
-  }
-
-  .intelligence-title {
-    font-size: 32px;
-  }
+.feature-visual img{
+ border-radius: 8px;
+ margin-top: 10vh;
 }
-
+/* assistance */
+.assistance-section{
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid rgba(128, 128, 128, 0.363);
+  gap: 5px;
+  padding: 30px;
+  border-radius: 28px;
+ text-align:center ;
+}
+.assistance-section img{
+  border-radius: 8px;
+  margin: 10vh 0 5vh 0;
+}
+.assistance-section h2 {
+font-size: 12px;
+  font-weight: 500;
+  color: #00f5a0;
+  margin-bottom: 12px;
+}
+.assistance-section p{
+  font-size: 20px;
+}
 /* enterprise */
 .enterprise-section {
-  background-color: #000;
+  background-color:#292626; 
   color: #fff;
   padding: 120px 24px;
+  margin-top: 12vh;
 }
 
 .enterprise-header {
@@ -348,15 +360,22 @@ h1 span {
   margin: 0 auto;
   border-radius: 24px;
   padding: 48px;
-  background: linear-gradient(135deg, #002b4e, #0b3a2e);
   display: flex;
+  background: url(./assets/c-4.svg) no-repeat;
   justify-content: space-between;
-  align-items: center;
   gap: 40px;
+  flex-direction: column;
+  min-width: 70vh;
+  border-radius: 10px;
 }
 
-.story-content {
-  max-width: 420px;
+.story-states {
+  display: flex;
+}
+.story-states-num{
+  display: block;
+  font-size: 45px;
+  font-weight: 500;
 }
 
 .story-eyebrow {
@@ -381,26 +400,12 @@ h1 span {
 }
 
 .story-visual {
-  width: 260px;
-  height: 180px;
+  /* width: 260px; */
+  /* height: 180px; */
   border-radius: 16px;
   background-color: rgba(255, 255, 255, 0.15);
 }
 
-@media (max-width: 900px) {
-  .enterprise-heading-row {
-    flex-direction: column;
-  }
-
-  .enterprise-features {
-    grid-template-columns: 1fr;
-  }
-
-  .enterprise-story {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
 
 /* customer section */
 .customers-section {
