@@ -254,7 +254,7 @@ h1 span {
   gap: 5px;
   padding: 30px;
   border-radius: 28px;
- text-align:center ;
+ text-align:center 
 }
 .assistance-section img{
   border-radius: 8px;
@@ -367,10 +367,12 @@ font-size: 12px;
   flex-direction: column;
   min-width: 70vh;
   border-radius: 10px;
+  height: 70vh;
 }
 
 .story-states {
   display: flex;
+  gap:15px
 }
 .story-states-num{
   display: block;
@@ -459,6 +461,9 @@ font-size: 12px;
   height: 180px;
   border-radius: 16px;
   background-color: rgba(255, 255, 255, 0.08);
+}
+.customer-visual img{
+  border-radius: 10px;
 }
 
 .customer-summary {
