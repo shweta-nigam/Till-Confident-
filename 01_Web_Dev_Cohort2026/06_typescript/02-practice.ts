@@ -16,3 +16,5 @@ console.log(result)
 // run -> tsc --version
 // to compile the ts file to js run -> tsc filename.ts
 // --- if it got compiled then there is no error otherwise it will throw error
+// we keep and push ts files on github then it compiles and then pushed on server
+
