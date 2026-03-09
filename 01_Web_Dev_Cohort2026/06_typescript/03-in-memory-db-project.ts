@@ -49,11 +49,38 @@ class InventoryDB {
         return data.id
     }
 
+
+    // method to update user
+    public updateUser(id: UserID, updateData: Omit<User, "id">): boolean {
+        if (!this._db.has(id)) throw new Error(`User with id ${id} does not exists`)
+        // this._db.set(id, updateData)  // not possible as updataData does not have id, but id is must in User
+        this._db.set(id, { ...updateData, id })                     // solution to above problem
+        return true
+    }
+    // But while updating a user, id got update as well then it would cause quite the problem. Therefore you id should never go with update. For that we use omit in ts
+
+    public getUserById(id: UserID): User {
+        if (!this._db.has(id)) throw new Error(`User with id ${id} does not exists`)
+        return this._db.get(id)!
+    }
 }
 
 const myDb = new InventoryDB()
 myDb.insertUser({    // if insertUser function was private then you could not access it here.
     id: "1",
+    fname: "sam",
+    email: "@gmail",
+    address: {
+        street: 54,
+        pin: 110032,
+        country: "India",
+    },
+    contact: {
+        mobile: "8909"
+    }
+})
+
+myDb.updateUser("1", {
     fname: "sam",
     email: "@gmail",
     address: {
