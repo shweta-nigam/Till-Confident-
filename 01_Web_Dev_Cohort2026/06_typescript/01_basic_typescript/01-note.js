@@ -38,3 +38,21 @@ key2:"lastName"
 // note: Here you won't know what to send in printUser function and the keys defined in it (in Js)
 // and if correct info is not given then code will crash, and many runtime error.
 
+
+
+
+// ---------------------------------   Illegal shadowing 
+// A bit about variables in js 
+
+let a = 7;       // Variable a declared in the global scope with let
+{
+    var a = 30;     // ILLEGAL: var attempts to re-declare 'a' in the same global scope
+}
+
+console.log(a); // SyntaxError: Identifier 'a' has already been declared
+
+// this happens because variables declared with var are  in global scope. 
+// And variables declared with 'let' can not be re-declared, causing syntax error.  
+// This is called Illegal shadowing 
+
+// Illegal shadowing in JavaScript occurs when a var declaration attempts to shadow a let or const variable within the same scope, which results in a SyntaxError
