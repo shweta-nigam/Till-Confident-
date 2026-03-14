@@ -1,11 +1,19 @@
 // This file encapsulate express.js 
 import express from "express"
 import type { Application } from "express"  // Application is a TypeScript type representing the Express app.
+import todoRouter from './todo/routes.js'
+
 
 //Routes
 
 export function createServerApplication() :Application {
     const app = express()
+
+    app.use(express.json())
+
+    app.use("/todos", todoRouter)
+
+
 
 //clubbing the code (how want it)
 // #region //*==== Routes ==============  
@@ -20,6 +28,13 @@ app.get("/hello", function(req,res) {
 
     return app
 }
+
+// try in terminal -> curl http://localhost:8080/todos  -- it will return -- {"todos":[]}
+
+// DRY run the whole process of each file and make mind map of connections between the files. And how they handle their single work 
+
+// 
+// Theory notes on notion by me finished(14th march 2026) - https://www.notion.so/02_Backend-With-TypeScript-31ff2317f09b80009ecede5b88db366c
 
 
 // note: The whole project fils follow - single responsibility model 

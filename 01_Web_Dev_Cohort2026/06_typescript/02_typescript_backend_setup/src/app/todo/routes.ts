@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import TodoController from './controllers.js'
 
-const router = Router()
+const router: Router = Router()
 const controller = new TodoController() // why?
 
 router.get('/', controller.handleGetAllTodos.bind(controller))

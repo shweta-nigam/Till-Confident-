@@ -1,23 +1,36 @@
-import type { Request,Response } from "express"
-import type {Todo} from "../../schema/todo.schema.js"
+import type { Request, Response } from "express"
+import { todoValidationSchema, type Todo } from "../../schema/todo.schema.js"
 
 
 class TodoController {
-    private _db:Todo[]
+    private _db: Todo[]
 
-    constructor(){
+    constructor() {
         this._db = []
     }
 
-    public handleGetAllTodos(req:Request,res:Response){
+    public handleGetAllTodos(req: Request, res: Response) {
         const todos = this._db
-        return res.json({todos})
+        return res.json({ todos })
     }
+
+    public async handleInsertTodo(req: Request, res: Response) {
+        try {
+            const invalidated = req.body
+            const validationResult = await todoValidationSchema.parseAsync(invalidated)
+            this._db.push(validationResult)
+            return res.status(201).json({ todo: validationResult })
+        } catch (error) {
+            return res.status(500).json({ error })
+        }
+    }
+
 }
 
 export default TodoController
 
-// why controller with class instead of functions ? 
+// why controller with class instead of functions ?
 // Ts interfaces does not handle runtime error, zod handles it. and ZOD is not TS
 
 // therefore:- you have to make interface to code in ts and then again make it's schema as well.
+
