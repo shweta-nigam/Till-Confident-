@@ -7,7 +7,7 @@
 // or (same as above)
 const fs = require("fs")      
 const path = require("path")
-const os = require("os")
+const os = require("os") 
 // these -> fs/path/os  are very important part of nodejs (research on them)
 
 
