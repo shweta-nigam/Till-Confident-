@@ -1,34 +1,81 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
-import { getCharacters } from '../services/api';
+// screens/HomeScreen.tsx
+
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+} from "react-native";
 
 export default function HomeScreen() {
-  const [characters, setCharacters] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getCharacters();
-
-        console.log('FULL API RESPONSE:', data);
-
-        setCharacters(data.items || data); // fallback
-      } catch (error) {
-        console.log('ERROR:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
-    <View>
-      <Text>Characters:</Text>
+    <ScrollView style={styles.container}>
 
-      {characters.map((char: any) => {
-        console.log('CHAR:', char);
-        return <Text key={char.id}>{char.name}</Text>;
-      })}
+      {/* Radar Card */}
+      <View style={styles.radarCard}>
+        <Text style={{ color: "#fff" }}>Radar Section</Text>
+      </View>
+
+      {/* Planet List */}
+      <View style={styles.list}>
+        <PlanetItem title="Earth" />
+        <PlanetItem title="Namek" />
+        <PlanetItem title="Planet Vegeta" />
+        <PlanetItem title="Beerus' Planet" />
+        <PlanetItem title="Supreme Kai’s World" />
+      </View>
+
+    </ScrollView>
+  );
+}
+
+/* reusable planet item */
+function PlanetItem({ title }: { title: string }) {
+  return (
+    <View style={styles.planetCard}>
+      <Text style={styles.planetText}>{title}</Text>
     </View>
   );
 }
+
+/* styles */
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#0b0f2a",
+  },
+  header: {
+    padding: 16,
+  },
+  title: {
+    fontSize: 22,
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  radarCard: {
+    height: 200,
+    margin: 16,
+    borderRadius: 20,
+    backgroundColor: "#1e2a5a",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  list: {
+    paddingHorizontal: 16,
+  },
+  planetCard: {
+    height: 70,
+    borderRadius: 12,
+    backgroundColor: "#2a3a7a",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+    marginBottom: 10,
+  },
+  planetText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+});
