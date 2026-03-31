@@ -1,5 +1,3 @@
-// CharacterDetailScreen.tsx
-
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -9,6 +7,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { getCharacterById, CharacterDetails } from "../services/api";
 
@@ -27,7 +26,6 @@ export default function CharacterDetailScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  /* fetch character */
   const fetchCharacter = async () => {
     try {
       setLoading(true);
@@ -45,139 +43,193 @@ export default function CharacterDetailScreen() {
     fetchCharacter();
   }, []);
 
-  /* loading state */
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color="#8e44ad" />
       </View>
     );
   }
 
-  /* error state */
   if (error || !character) {
     return (
       <View style={styles.center}>
-        <Text>{error || "No data found"}</Text>
+        <Text style={{ color: "#fff" }}>{error || "No data found"}</Text>
       </View>
     );
   }
 
   return (
-    <ScrollView style={styles.container}>
-      {/* character image */}
-      <Image source={{ uri: character.image }} style={styles.image} />
+    <LinearGradient
+      colors={["#0f0c29", "#302b63", "#24243e"]}
+      style={{ flex: 1 }}
+    >
+      <ScrollView contentContainerStyle={styles.container}>
+        
+        {/* 🔥 CHARACTER IMAGE */}
+        <View style={styles.imageContainer}>
+          <Image
+            source={{ uri: character.image }}
+            style={styles.image}
+            resizeMode="contain" 
+          />
+        </View>
 
-      {/* basic info */}
-      <Text style={styles.name}>{character.name}</Text>
-      <Text style={styles.info}>Race: {character.race}</Text>
-      <Text style={styles.info}>Gender: {character.gender}</Text>
-      <Text style={styles.info}>Ki: {character.ki}</Text>
-      <Text style={styles.info}>Max Ki: {character.maxKi}</Text>
-      <Text style={styles.info}>Affiliation: {character.affiliation}</Text>
+        {/* 🔥 INFO CARD */}
+        <View style={styles.card}>
+          <Text style={styles.name}>{character.name}</Text>
 
-      {/* description */}
-      <Text style={styles.sectionTitle}>Description</Text>
-      <Text style={styles.description}>{character.description}</Text>
+          <Text style={styles.info}>Race: {character.race}</Text>
+          <Text style={styles.info}>Gender: {character.gender}</Text>
+          <Text style={styles.info}>Ki: {character.ki}</Text>
+          <Text style={styles.info}>Max Ki: {character.maxKi}</Text>
+          <Text style={styles.info}>
+            Affiliation: {character.affiliation}
+          </Text>
+        </View>
 
-      {/* origin planet */}
-      {character.originPlanet && (
-        <>
-          <Text style={styles.sectionTitle}>Origin Planet</Text>
-          <View style={styles.planetCard}>
+        {/* 🔥 DESCRIPTION */}
+        <View style={styles.card}>
+          <Text style={styles.sectionTitle}>Description</Text>
+          <Text style={styles.description}>
+            {character.description}
+          </Text>
+        </View>
+
+        {/* 🌍 PLANET */}
+        {character.originPlanet && (
+          <View style={styles.card}>
+            <Text style={styles.sectionTitle}>Origin Planet</Text>
+
             <Image
               source={{ uri: character.originPlanet.image }}
               style={styles.planetImage}
+              resizeMode="cover"
             />
+
             <Text style={styles.planetName}>
               {character.originPlanet.name}
             </Text>
           </View>
-        </>
-      )}
+        )}
 
-      {/* transformations */}
-      <Text style={styles.sectionTitle}>Transformations</Text>
+        {/* ⚡ TRANSFORMATIONS */}
+        <View style={styles.card}>
+          <Text style={styles.sectionTitle}>Transformations</Text>
 
-      {character.transformations.length === 0 ? (
-        <Text style={styles.info}>No transformations available</Text>
-      ) : (
-        character.transformations.map((t) => (
-          <View key={t.id} style={styles.transformationCard}>
-            <Image source={{ uri: t.image }} style={styles.transImage} />
-            <Text style={styles.transName}>{t.name}</Text>
-            <Text style={styles.info}>Ki: {t.ki}</Text>
-          </View>
-        ))
-      )}
-    </ScrollView>
+          {character.transformations.length === 0 ? (
+            <Text style={styles.info}>
+              No transformations available
+            </Text>
+          ) : (
+            character.transformations.map((t) => (
+              <View key={t.id} style={styles.transformationCard}>
+                <Image
+                  source={{ uri: t.image }}
+                  style={styles.transImage}
+                  resizeMode="contain"
+                />
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.transName}>{t.name}</Text>
+                  <Text style={styles.info}>Ki: {t.ki}</Text>
+                </View>
+              </View>
+            ))
+          )}
+        </View>
+      </ScrollView>
+    </LinearGradient>
   );
 }
 
-/* styles */
+/* 🎨 STYLES */
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 12,
+    padding: 14,
+    paddingBottom: 30,
   },
-  image: {
-    width: "100%",
-    height: 250,
-    borderRadius: 10,
+
+  imageContainer: {
+    alignItems: "center",
     marginBottom: 10,
   },
-  name: {
-    fontSize: 22,
-    fontWeight: "bold",
-    marginBottom: 6,
+
+  image: {
+    width: "100%",
+    height: 260,
   },
+
+  card: {
+    backgroundColor: "rgba(255,255,255,0.05)", // glass
+    borderRadius: 14,
+    padding: 14,
+    marginBottom: 12,
+
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.1)",
+  },
+
+  name: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 8,
+  },
+
   info: {
     fontSize: 14,
+    color: "#ccc",
     marginBottom: 4,
   },
+
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginTop: 12,
+    color: "#a29bfe",
     marginBottom: 6,
   },
+
   description: {
     fontSize: 14,
+    color: "#ddd",
     lineHeight: 20,
   },
-  planetCard: {
-    marginTop: 6,
-    marginBottom: 10,
-  },
+
   planetImage: {
     width: "100%",
-    height: 150,
+    height: 160,
     borderRadius: 10,
+    marginBottom: 6,
   },
+
   planetName: {
+    color: "#fff",
     fontSize: 16,
     fontWeight: "600",
-    marginTop: 4,
   },
+
   transformationCard: {
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 10,
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 10,
+    gap: 10,
   },
+
   transImage: {
-    width: "100%",
-    height: 150,
-    borderRadius: 10,
+    width: 80,
+    height: 100,
   },
+
   transName: {
     fontSize: 16,
+    color: "#fff",
     fontWeight: "600",
-    marginTop: 4,
   },
+
   center: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#0f0c29",
   },
 });

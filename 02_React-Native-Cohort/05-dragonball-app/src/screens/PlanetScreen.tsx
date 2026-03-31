@@ -1,154 +1,83 @@
-
 import React, { useEffect, useState } from "react";
 import {
   View,
   FlatList,
-  ActivityIndicator,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
   TextInput,
+  StyleSheet,
+  ActivityIndicator,
+  ImageBackground,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+
 import { getPlanets, Planet } from "../services/api";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types/navigation";
+import PlanetCard from "../components/PlanetCard";
+import Loader from "../components/Loader";
+import ErrorView from "../components/ErrorView";
 
-type NavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "PlanetDetail"
->;
-
-export default function PlanetScreen() {
-  const navigation = useNavigation<NavigationProp>();
-
-  const [planets, setPlanets] = useState<Planet[]>([]);
-  const [filteredPlanets, setFilteredPlanets] = useState<Planet[]>([]);
-
+export default function PlanetListScreen() {
+ const [planets, setPlanets] = useState<Planet[]>([]);
+const [filtered, setFiltered] = useState<Planet[]>([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-
-  // search + filter state
+ const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState<"ALL" | "DESTROYED" | "ACTIVE">("ALL");
 
-  /* fetch planets */
-  const fetchPlanets = async (pageNum = 1) => {
-    try {
-      const res = await getPlanets(pageNum);
-
-      const newData =
-        pageNum === 1 ? res.items : [...planets, ...res.items];
-
-      setPlanets(newData);
-      setHasMore(pageNum < res.meta.totalPages);
-      setPage(pageNum);
-    } catch (err) {
-      console.log("Error fetching planets");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // fetch once
   useEffect(() => {
-    fetchPlanets(1);
+    const fetchPlanets = async () => {
+      try {
+        const res = await getPlanets();
+        setPlanets(res.items || res);
+        setFiltered(res.items || res);
+      } catch {
+        setError("Failed to load planets");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPlanets();
   }, []);
 
-  /* load more */
-  const loadMore = () => {
-    if (!hasMore) return;
-    fetchPlanets(page + 1);
-  };
-
-  /* apply search + filter locally */
+  // local search (no API call)
   useEffect(() => {
-    let data = [...planets];
-
-    // search filter
-    if (search) {
-      data = data.filter((p) =>
-        p.name.toLowerCase().includes(search.toLowerCase())
+    if (!search.trim()) {
+      setFiltered(planets);
+    } else {
+      const s = search.toLowerCase();
+      setFiltered(
+        planets.filter((p) => p.name.toLowerCase().includes(s))
       );
     }
+  }, [search, planets]);
 
-    // status filter
-    if (filter === "DESTROYED") {
-      data = data.filter((p) => p.isDestroyed);
-    } else if (filter === "ACTIVE") {
-      data = data.filter((p) => !p.isDestroyed);
-    }
-
-    setFilteredPlanets(data);
-  }, [search, filter, planets]);
-
-  if (search || filter !== "ALL") return;
-
-  /* render item */
-  const renderItem = ({ item }: { item: Planet }) => (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() =>
-        navigation.navigate("PlanetDetail", { id: item.id })
-      }
-    >
-      <Text style={styles.name}>{item.name}</Text>
-      <Text>{item.isDestroyed ? "Destroyed" : "Active"}</Text>
-    </TouchableOpacity>
-  );
-
-  if (loading && planets.length === 0) {
-    return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  if (loading) return <Loader />;
+  if (error) return <ErrorView message={error} />;
 
   return (
-    <View style={styles.container}>
-      {/* search input */}
-      <TextInput
-        placeholder="Search planets..."
-        value={search}
-        onChangeText={setSearch}
-        style={styles.search}
-      />
+    <ImageBackground
+      source={require("../../assets/dragon-bg.png")}
+      style={styles.container}
+      resizeMode="cover"
+    >
+      {/* search UI reused */}
+      <View style={styles.searchContainer}>
+        <Ionicons name="search" size={18} color="#aaa" />
 
-      {/* filter buttons */}
-      <View style={styles.filterRow}>
-        <TouchableOpacity
-          style={styles.filterBtn}
-          onPress={() => setFilter("ALL")}
-        >
-          <Text>All</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.filterBtn}
-          onPress={() => setFilter("ACTIVE")}
-        >
-          <Text>Active</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.filterBtn}
-          onPress={() => setFilter("DESTROYED")}
-        >
-          <Text>Destroyed</Text>
-        </TouchableOpacity>
+        <TextInput
+          placeholder="Search planets..."
+          placeholderTextColor="#aaa"
+          style={styles.searchInput}
+          onChangeText={setSearch}
+        />
       </View>
 
-      {/* list */}
       <FlatList
-        data={filteredPlanets}
+        data={filtered}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={renderItem}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.5}
+        renderItem={({ item }) => <PlanetCard item={item} />}
         contentContainerStyle={{ paddingBottom: 20 }}
       />
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -157,36 +86,22 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 12,
   },
-  search: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 10,
-  },
-  filterRow: {
+
+  searchContainer: {
     flexDirection: "row",
-    gap: 10,
-    marginBottom: 10,
-  },
-  filterBtn: {
-    padding: 8,
-    borderWidth: 1,
-    borderRadius: 6,
-  },
-  card: {
-    padding: 12,
-    borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  name: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  center: {
-    flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    marginTop: 20,
+    marginBottom: 12,
+  },
+
+  searchInput: {
+    flex: 1,
+    marginLeft: 8,
+    color: "#fff",
+    fontSize: 14,
   },
 });

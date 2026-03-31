@@ -1,23 +1,20 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { Character } from "../services/api";
 import { useNavigation } from "@react-navigation/native";
+import { useFavorites } from "../context/FavoritesContext";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/navigation";
-import { useFavorites } from "../context/FavoritesContext";
 import { Ionicons } from "@expo/vector-icons";
 
+type Props = {
+  item: any; // replace with Planet type
+  variant?: "default" | "home" | "compact";
+};
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
-  "CharacterDetail"
+  "PlanetDetail"
 >;
-
-type Props = {
-  item: Character;
-  variant?: "default" | "compact" | "home";
-};
-
-export default function CharacterCard({ item, variant = "default" }: Props) {
+export default function PlanetCard({ item, variant = "default" }: Props) {
   const navigation = useNavigation<NavigationProp>();
 
   const { addFavorite, removeFavorite, isFavorite } = useFavorites();
@@ -25,8 +22,7 @@ export default function CharacterCard({ item, variant = "default" }: Props) {
 
   return (
     <TouchableOpacity
-      activeOpacity={0.85}
-      onPress={() => navigation.navigate("CharacterDetail", { id: item.id })}
+      onPress={() => navigation.navigate("PlanetDetail", { id: item.id })}
     >
       <View
         style={[
@@ -39,7 +35,7 @@ export default function CharacterCard({ item, variant = "default" }: Props) {
         <TouchableOpacity
           style={styles.favButton}
           onPress={(e) => {
-            e.stopPropagation(); // prevents navigation
+            e.stopPropagation();
             if (fav) {
               removeFavorite(item.id);
             } else {
@@ -47,7 +43,7 @@ export default function CharacterCard({ item, variant = "default" }: Props) {
                 id: item.id,
                 name: item.name,
                 image: item.image,
-                type: "character",
+                type: "planet",
               });
             }
           }}
@@ -59,21 +55,25 @@ export default function CharacterCard({ item, variant = "default" }: Props) {
           />
         </TouchableOpacity>
 
-        {/* 🧍 IMAGE LEFT */}
+        {/* image left, same layout */}
         <Image
           source={{ uri: item.image }}
-          style={variant === "home" ? styles.image : styles.listImage}
-          resizeMode="contain"
+          style={styles.image}
+          resizeMode="cover"
         />
 
-        {/* 📄 INFO RIGHT */}
+        {/* info right */}
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{item.name}</Text>
 
           {variant !== "compact" && (
             <>
-              <Text style={styles.info}>{item.race}</Text>
-              <Text style={styles.info}>Ki: {item.ki}</Text>
+              <Text style={styles.info}>
+                Population: {item.population || "Unknown"}
+              </Text>
+              <Text style={styles.info}>
+                Destroyed: {item.isDestroyed ? "Yes" : "No"}
+              </Text>
             </>
           )}
         </View>
@@ -83,23 +83,17 @@ export default function CharacterCard({ item, variant = "default" }: Props) {
 }
 
 const styles = StyleSheet.create({
-  /* 🔥 MAIN CARD */
   card: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     padding: 14,
     marginBottom: 14,
     borderRadius: 16,
 
-    // 🎨 purple-blue theme
     backgroundColor: "#1f1b3a",
-
-    // 💎 border glow effect
     borderWidth: 1,
     borderColor: "rgba(162,155,254,0.3)",
 
-    // 🧊 shadow depth
     shadowColor: "#6c5ce7",
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.4,
@@ -107,44 +101,33 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
 
-  /* 🏠 HOME SCREEN VARIANT */
   homeCard: {
     backgroundColor: "#2a2250",
     borderColor: "rgba(108,92,231,0.4)",
   },
 
-  /* 📦 COMPACT (optional horizontal use) */
   compactCard: {
     width: 140,
     flexDirection: "column",
     alignItems: "center",
-    padding: 12,
-  },
-  listImage: {
-    marginRight: 120,
-    width: 90,
-    height: 120,
   },
 
-  /* 🧍 IMAGE */
   image: {
     width: 90,
-    height: 120,
-    marginRight: 12,
+    height: 90,
+    marginRight: 14, // spacing between image and text
+    borderRadius: 10,
   },
 
-  /* 📄 INFO */
   infoContainer: {
     flex: 1,
-    justifyContent: "center",
     gap: 4,
   },
 
   name: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#ffffff",
-    marginBottom: 4,
+    color: "#fff",
   },
 
   info: {

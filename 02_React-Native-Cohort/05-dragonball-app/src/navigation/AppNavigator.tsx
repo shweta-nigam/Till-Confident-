@@ -76,8 +76,6 @@ const getIcon = (routeName: string) => {
       return require("../../assets/planet-tab-icon.webp");
     case "Favorites":
       return require("../../assets/fav-tab-icon.webp");
-    case "Settings":
-      return require("../../assets/settings-tab-icon.webp");
     default:
       return require("../../assets/home-tab-icon.webp");
   }
@@ -118,7 +116,6 @@ export default function AppNavigator() {
             return (
               <View
                 style={{
-                  // backgroundColor: focused ? "#FFD700" : "transparent",
                   padding: 8,
                   borderRadius: 24,
                 }}
@@ -128,7 +125,6 @@ export default function AppNavigator() {
                   style={{
                     width: 40,
                     height: 40,
-                    // tintColor: focused ? "#000" : "#ccc",
                   }}
                   resizeMode="contain"
                 />
@@ -141,7 +137,6 @@ export default function AppNavigator() {
         <Tab.Screen name="Characters" component={CharacterStack} />
         <Tab.Screen name="Planets" component={PlanetStack} />
         <Tab.Screen name="Favorites" component={FavoriteStack} />
-        <Tab.Screen name="Settings" component={SettingsStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );

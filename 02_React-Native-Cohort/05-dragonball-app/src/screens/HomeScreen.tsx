@@ -1,88 +1,275 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import React, { useEffect, useRef } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Animated,
+  TouchableOpacity,
+} from "react-native";
+import { Video, ResizeMode } from "expo-av";
+import { FlatList } from "react-native";
+import { useCharacters } from "../hooks/useCharacters";
+import CharacterCard from "../components/CharacterCard";
+import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen() {
+  const { characters, loading } = useCharacters();
+  const topCharacters = characters.slice(0, 10);
+
+  const navigation = useNavigation();
+
+  //  FALL ANIMATIONS
+  const fall1 = useRef(new Animated.Value(-200)).current;
+  const fall2 = useRef(new Animated.Value(-200)).current;
+  const fall3 = useRef(new Animated.Value(-200)).current;
+  const fall4 = useRef(new Animated.Value(-200)).current;
+
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  //  SCROLL (PARALLAX)
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  // LOGO + BUTTON GLOW
+  const scale = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    // Falling sequence
+    Animated.sequence([
+      Animated.parallel([
+        Animated.timing(fall1, {
+          toValue: 0,
+          duration: 600,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacity, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.timing(fall2, {
+        toValue: 0,
+        duration: 700,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fall3, {
+        toValue: 0,
+        duration: 800,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fall4, {
+        toValue: 0,
+        duration: 900,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    // Glow loop (logo + button)
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(scale, {
+          toValue: 1.08,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+        Animated.timing(scale, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, []);
+
   return (
-    <ScrollView style={styles.container}>
-      {/* logo */}
-
-      <View style={{ flex: 1, alignItems: "flex-start", marginTop: 40 }}>
-        <Image
-          source={require("../../assets/app-logo.webp")}
-          style={{ width: 200, height: 100 }}
-          resizeMode="contain"
+    <View style={{ flex: 1 }}>
+      {/* 🎬 PARALLAX VIDEO BACKGROUND */}
+      <Animated.View
+        style={[
+          StyleSheet.absoluteFillObject,
+          {
+            transform: [
+              {
+                translateY: scrollY.interpolate({
+                  inputRange: [0, 500],
+                  outputRange: [0, -150],
+                  extrapolate: "clamp",
+                }),
+              },
+            ],
+          },
+        ]}
+      >
+        <Video
+          source={require("../../assets/bg-vid.mp4")}
+          style={StyleSheet.absoluteFillObject}
+          resizeMode={ResizeMode.COVER}
+          shouldPlay
+          isLooping
+          isMuted
         />
-      </View>
+      </Animated.View>
 
-      {/* Radar Card */}
-      <View style={styles.radarCard}>
-        <Image
-          source={require("../../assets/radar-img.webp")}
-          style={{ width: "100%", height: "100%" }}
-          resizeMode="cover"
-        />
-      </View>
+      {/* 📜 SCROLLABLE CONTENT */}
+      <Animated.ScrollView
+        style={styles.container}
+        contentContainerStyle={{ paddingBottom: 300 }}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: true }
+        )}
+        scrollEventThrottle={16}
+      >
+        {/* LOGO */}
+        <Animated.View
+          style={[
+            styles.logo,
+            { transform: [{ translateY: fall1 }], opacity },
+          ]}
+        >
+          <Image
+            source={require("../../assets/app-logo2.webp")}
+            style={{ width: 200, height: 100 }}
+            resizeMode="contain"
+          />
+        </Animated.View>
 
-      {/* Planet List */}
-      <View style={styles.list}>
-        <PlanetItem title="Earth" />
-        <PlanetItem title="Namek" />
-        <PlanetItem title="Planet Vegeta" />
-        <PlanetItem title="Beerus' Planet" />
-        <PlanetItem title="Supreme Kai’s World" />
-      </View>
-    </ScrollView>
-  );
-}
+        {/* RADAR CARD */}
+        <Animated.View
+          style={[
+            styles.radarCard,
+            { transform: [{ translateY: fall2 }], opacity },
+          ]}
+        >
+          <Image
+            source={require("../../assets/radar-img.webp")}
+            style={{ width: "100%", height: "100%" }}
+            resizeMode="cover"
+          />
+        </Animated.View>
 
-/* reusable planet item */
-function PlanetItem({ title }: { title: string }) {
-  return (
-    <View style={styles.planetCard}>
-      <Text style={styles.planetText}>{title}</Text>
+        {/* CENTER LOGO */}
+        <Animated.View
+          style={[
+            styles.centerContainer,
+            { transform: [{ translateY: fall3 }], opacity },
+          ]}
+        >
+          <Animated.Image
+            source={require("../../assets/logo-center.webp")}
+            style={[
+              styles.centerLogo,
+              { transform: [{ scale }] },
+            ]}
+            resizeMode="contain"
+          />
+
+          <View style={styles.whiteLine} />
+          <View style={styles.orangeLine} />
+        </Animated.View>
+
+        {/* CHARACTERS */}
+        <Animated.View
+          style={[
+            { marginTop: 30 },
+            { transform: [{ translateY: fall4 }], opacity },
+          ]}
+        >
+          <FlatList
+            data={topCharacters}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={{ marginRight: 12, marginLeft: 14 }}>
+                <CharacterCard item={item} variant="home" />
+              </View>
+            )}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            ListEmptyComponent={
+              loading ? (
+                <Text style={{ color: "#fff" }}>Loading...</Text>
+              ) : null
+            }
+          />
+        </Animated.View>
+
+        {/* 🌍 EXPLORE PLANETS BUTTON */}
+        <Animated.View
+          style={[
+            styles.exploreBtnContainer,
+            { transform: [{ scale }] },
+          ]}
+        >
+          <TouchableOpacity
+            style={styles.exploreBtn}
+            onPress={() => navigation.navigate("Planets")}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.exploreText}>🌍 Explore Planets</Text>
+          </TouchableOpacity>
+        </Animated.View>
+      </Animated.ScrollView>
     </View>
   );
 }
 
-/* styles */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "purple",
+    backgroundColor: "transparent",
   },
-  header: {
-    padding: 16,
-  },
-  title: {
-    fontSize: 22,
-    color: "#fff",
-    fontWeight: "bold",
+  logo: {
+    alignItems: "flex-start",
+    marginTop: 50,
+    marginLeft: 16,
   },
   radarCard: {
     height: 200,
     margin: 16,
     borderRadius: 20,
     backgroundColor: "#1e2a5a",
-    justifyContent: "center",
-    alignItems: "center",
-
-    marginHorizontal: 16,
     overflow: "hidden",
   },
-  list: {
-    paddingHorizontal: 16,
+  centerContainer: {
+    alignItems: "center",
+    marginTop: 60,
   },
-  planetCard: {
-    height: 70,
-    borderRadius: 12,
-    backgroundColor: "#2a3a7a",
-    justifyContent: "center",
-    paddingHorizontal: 16,
-    marginBottom: 10,
+  centerLogo: {
+    width: 300,
+    height: 160,
   },
-  planetText: {
+  whiteLine: {
+    width: "90%",
+    height: 2,
+    backgroundColor: "white",
+    borderRadius: 9,
+    marginTop: 10,
+  },
+  orangeLine: {
+    width: "90%",
+    height: 2,
+    backgroundColor: "orange",
+    borderRadius: 9,
+    marginTop: 4,
+  },
+  exploreBtnContainer: {
+    alignItems: "center",
+    marginTop: 40,
+  },
+  exploreBtn: {
+    paddingVertical: 14,
+    paddingHorizontal: 30,
+    borderRadius: 30,
+    backgroundColor: "rgba(255,140,0,0.95)",
+    shadowColor: "#ff9900",
+    shadowOpacity: 0.9,
+    shadowRadius: 12,
+    elevation: 10,
+  },
+  exploreText: {
     color: "#fff",
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "bold",
   },
 });
