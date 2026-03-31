@@ -1,21 +1,26 @@
-// screens/HomeScreen.tsx
-
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ScrollView,
-} from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 
 export default function HomeScreen() {
   return (
     <ScrollView style={styles.container}>
+      {/* logo */}
+
+      <View style={{ flex: 1, alignItems: "flex-start", marginTop: 40 }}>
+        <Image
+          source={require("../../assets/app-logo.webp")}
+          style={{ width: 200, height: 100 }}
+          resizeMode="contain"
+        />
+      </View>
 
       {/* Radar Card */}
       <View style={styles.radarCard}>
-        <Text style={{ color: "#fff" }}>Radar Section</Text>
+        <Image
+          source={require("../../assets/radar-img.webp")}
+          style={{ width: "100%", height: "100%" }}
+          resizeMode="cover"
+        />
       </View>
 
       {/* Planet List */}
@@ -26,7 +31,6 @@ export default function HomeScreen() {
         <PlanetItem title="Beerus' Planet" />
         <PlanetItem title="Supreme Kai’s World" />
       </View>
-
     </ScrollView>
   );
 }
@@ -44,7 +48,7 @@ function PlanetItem({ title }: { title: string }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0b0f2a",
+    backgroundColor: "purple",
   },
   header: {
     padding: 16,
@@ -61,6 +65,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#1e2a5a",
     justifyContent: "center",
     alignItems: "center",
+
+    marginHorizontal: 16,
+    overflow: "hidden",
   },
   list: {
     paddingHorizontal: 16,
