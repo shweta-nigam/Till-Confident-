@@ -12,6 +12,7 @@ import { FlatList } from "react-native";
 import { useCharacters } from "../hooks/useCharacters";
 import CharacterCard from "../components/CharacterCard";
 import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function HomeScreen() {
   const { characters, loading } = useCharacters();
@@ -210,6 +211,11 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </Animated.View>
       </Animated.ScrollView>
+
+       <LinearGradient
+    colors={["transparent", "#2b0a3d", "#540979"]}
+    style={styles.bottomFade}
+  />
     </View>
   );
 }
@@ -272,4 +278,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  bottomFade: {
+  position: "absolute",
+  bottom: 0,
+  width: "100%",
+  height: 200, 
+},
 });
