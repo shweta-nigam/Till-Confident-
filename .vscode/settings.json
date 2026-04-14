@@ -1,3 +1,27 @@
 {
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "local-postgres",
+            "database": "mydb",
+            "username": "postgres"
+        },
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "bookmyticket-db",
+            "database": "sql_class_2_db",
+            "username": "postgres",
+            "password": "postgres"
+        }
+    ]
 }
