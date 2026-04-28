@@ -1,39 +1,38 @@
-import { useState , useEffect} from "react";
-import {StyleSheet, Text, View} from "react-native";
+import { useState, useEffect } from "react";
 import { Pedometer } from 'expo-sensors';
 
 export default function usePedometer() {
-    const [isPedometerAvailable, setIsPedometerAvailable] = useState('checking');
-  const [pastStepCount, setPastStepCount] = useState(0);
-  const [currentStepCount, setCurrentStepCount] = useState(0);
+    const [isPedometerAvailable, setIsPedometerAvailable] = useState<boolean | 'checking'>('checking');
+    const [pastStepCount, setPastStepCount] = useState(0);
+    const [currentStepCount, setCurrentStepCount] = useState(0);
 
-useEffect(() => {
-    let subscription: any;
+    useEffect(() => {
+        let subscription: Pedometer.Subscription | null = null;
 
-    const subscribe = async () =>{
-        const available = await Pedometer.isAvailableAsync();
-        setIsPedometerAvailable(available)
+        const subscribe = async () => {
+            const available = await Pedometer.isAvailableAsync();
+            setIsPedometerAvailable(available)
 
-        if(available){
-            const end = new Date();
-            const start = new Date();
-            start.setDate(end.getDate() -1)
+            if (available) {
+                const end = new Date();
+                const start = new Date();
+                start.setDate(end.getDate() - 1)
 
-            const result = await Pedometer.getStepCountAsync(start,end);
-            setPastStepCount(result.steps)
+                const result = await Pedometer.getStepCountAsync(start, end);
+                setPastStepCount(result.steps)
 
-            subscription = Pedometer.watchStepCount((res)=> {
-                setCurrentStepCount(res.steps)
-            })
+                subscription = Pedometer.watchStepCount((res) => {
+                    setCurrentStepCount(res.steps)
+                })
+            }
         }
-    }
 
-    subscribe();
+        subscribe();
 
-    return () => subscription?.remove()
-}, []);
+        return () => subscription?.remove()
+    }, []);
 
-return { isPedometerAvailable, setPastStepCount, currentStepCount}
+    return { isPedometerAvailable, pastStepCount, currentStepCount }
 
 }
 

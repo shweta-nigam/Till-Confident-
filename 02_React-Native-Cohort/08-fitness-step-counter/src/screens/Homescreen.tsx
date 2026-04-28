@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { View, Text, Image } from "react-native";
 import Tabs from "../components/Header/Tabs";
+import { StepCounter } from "../components/StepCircle";
 
 export default function HomeScreen() {
 
@@ -11,10 +12,10 @@ export default function HomeScreen() {
       {/* header */}
       <View>
         {/* profile pic */}
-         <Image 
+         {/* <Image 
           source = {{}}
           style={{}}
-          />
+          /> */}
         <View>
 
           {/* tabs */}
@@ -33,35 +34,35 @@ export default function HomeScreen() {
       </View>
 
       {/* circular progress bar - step counter */}
-      <View></View>
+      <StepCounter />
 
       {/* data on kal, km and m/hr */}
 
       <View>
         {/* kal */}
         <View>
-          <Image 
+          {/* <Image 
           source = {{}}
           style={{}}
-          />
+          /> */}
           <Text> Kal</Text>
         </View>
 
         {/* distance */}
         <View>
-        <Image 
+        {/* <Image 
           source = {{}}
           style={{}}
-          />
+          /> */}
           <Text> m/km</Text>
         </View>
 
         {/* time */}
         <View>
-           <Image 
+           {/* <Image 
           source = {{}}
           style={{}}
-          />
+          /> */}
           <Text> hr</Text>
         </View>
       </View>
