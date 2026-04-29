@@ -1,3 +1,5 @@
+import { Response } from "express";
+
 export class ApiResponse <T> {
     constructor (
         public message: string =  "Success",
@@ -9,7 +11,7 @@ export class ApiResponse <T> {
  return res.status(200).json(new ApiResponse(message, data));
    }
 
-   static created <T> (res:any, message: string, data: T | null = null) {
+   static created <T> (res:Response, message: string, data: T | null = null) {
     return res.status(201).json(new ApiResponse(message, data))
    }
 

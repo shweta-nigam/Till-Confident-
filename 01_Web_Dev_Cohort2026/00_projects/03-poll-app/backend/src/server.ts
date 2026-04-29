@@ -11,8 +11,8 @@ dotenv.config()
 
 
 const PORT = process.env.PORT ?? 8080
-const uri = process.env.DATABASE_URI
-const redis_uri = process.env.REDIS_URI
+const uri = process.env.DATABASE_URL
+const redis_uri = process.env.REDIS_URL
 
 
 async function start() {
@@ -23,7 +23,7 @@ async function start() {
         const httpServer = createServer(app)
         // attach socket.io
 
-      await  connectRedis(redis_uri!)
+        connectRedis(redis_uri!)
 
       initSocket(httpServer)
 

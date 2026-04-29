@@ -1,6 +1,9 @@
-import Redis, {type Redis as RedisType} from "ioredis"
+import IORedis from "ioredis";
 
-let redis: RedisType;
+const Redis = IORedis.default;
+
+
+let redis: InstanceType<typeof Redis>;
 
 export const connectRedis = (uri: string) => {
     redis = new Redis(uri)

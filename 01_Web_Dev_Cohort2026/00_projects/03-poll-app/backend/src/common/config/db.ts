@@ -1,5 +1,8 @@
 import { drizzle } from 'drizzle-orm/neon-http';
 import { neon } from "@neondatabase/serverless"
+import * as schema from "../../db/schema/index.js"; 
+
+let db: ReturnType<typeof drizzle<typeof schema>>;
 
 export async function DBConnect(uri: string) {
     if (!uri) {
@@ -7,7 +10,7 @@ export async function DBConnect(uri: string) {
     }
 
     const sql = neon(uri)
-    const db = drizzle(sql)
+     db = drizzle(sql, {schema})
 
     try {
         await db.execute("SELECT 1")
@@ -20,3 +23,5 @@ export async function DBConnect(uri: string) {
 
     }
 }
+
+export { db }
