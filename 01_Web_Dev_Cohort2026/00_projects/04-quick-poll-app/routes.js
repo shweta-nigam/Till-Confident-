@@ -6,6 +6,8 @@ import { eq, sql } from "drizzle-orm";
 export const createRouter = (io) => {
   const router = express.Router();
 
+  const baseUrl = process.env.BASE_URL || "http://localhost:8080";
+
   // Create poll
   router.post("/poll", async (req, res) => {
     try {
@@ -29,7 +31,7 @@ export const createRouter = (io) => {
 
       res.json({
         pollId: poll.id,
-        shareUrl: `http://localhost:8080/poll.html?id=${poll.id}`,
+        shareUrl: `${baseUrl}/poll.html?pollId=${poll.id}`,
       });
     } catch (err) {
       console.error(err);
@@ -59,62 +61,61 @@ export const createRouter = (io) => {
   });
 
   router.post("/poll/:pollId/vote", async (req, res) => {
-  try {
-    const { pollId } = req.params;
-    const { optionId, userId } = req.body;
+    try {
+      const { pollId } = req.params;
+      const { optionId, userId } = req.body;
 
-    if (!optionId || !userId) {
-      return res.status(400).json({ error: "Missing data" });
-    }
+      if (!optionId || !userId) {
+        return res.status(400).json({ error: "Missing data" });
+      }
 
-    // check if already voted
-    const existingVote = await db.query.voteTable.findFirst({
-      where: (v, { eq, and }) =>
-        and(eq(v.pollId, pollId), eq(v.userId, userId)),
-    });
+      // check if already voted
+      const existingVote = await db.query.voteTable.findFirst({
+        where: (v, { eq, and }) =>
+          and(eq(v.pollId, pollId), eq(v.userId, userId)),
+      });
 
-    if (existingVote) {
-      return res.status(400).json({ error: "Already voted" });
-    }
+      if (existingVote) {
+        return res.status(400).json({ error: "Already voted" });
+      }
 
-    // insert vote
-    await db.insert(voteTable).values({
-      pollId,
-      optionId,
-      userId,
-    });
+      // insert vote
+      await db.insert(voteTable).values({
+        pollId,
+        optionId,
+        userId,
+      });
 
-    // increment vote
-    await db
-      .update(optionTable)
-      .set({
-        votes: sql`${optionTable.votes} + 1`,
-      })
-      .where(eq(optionTable.id, optionId));
+      // increment vote
+      await db
+        .update(optionTable)
+        .set({
+          votes: sql`${optionTable.votes} + 1`,
+        })
+        .where(eq(optionTable.id, optionId));
 
-    // fetch updated poll
-    const option = await db.query.optionTable.findFirst({
-      where: (o, { eq }) => eq(o.id, optionId),
-      with: {
-        poll: {
-          with: { options: true },
+      // fetch updated poll
+      const option = await db.query.optionTable.findFirst({
+        where: (o, { eq }) => eq(o.id, optionId),
+        with: {
+          poll: {
+            with: { options: true },
+          },
         },
-      },
-    });
+      });
 
-    const updatedPoll = option?.poll;
+      const updatedPoll = option?.poll;
 
-    if (updatedPoll) {
-      io.to(updatedPoll.id).emit("vote_update", updatedPoll);
+      if (updatedPoll) {
+        io.to(updatedPoll.id).emit("vote_update", updatedPoll);
+      }
+
+      res.json({ success: true, poll: updatedPoll });
+    } catch (err) {
+      console.error("VOTE ERROR:", err); //  THIS will show real issue
+      res.status(500).json({ error: "Vote failed" });
     }
-
-    res.json({ success: true, poll: updatedPoll });
-
-  } catch (err) {
-    console.error("VOTE ERROR:", err); // 👈 THIS will show real issue
-    res.status(500).json({ error: "Vote failed" });
-  }
-});
+  });
 
   return router;
 };

@@ -81,89 +81,125 @@
 <script>
   const socket = io();
 
-  const params = new URLSearchParams(window.location.search);
-  const pollId = params.get("id");
+  async function init() {
+    const params = new URLSearchParams(window.location.search);
+    const pollId = params.get("pollId");
 
-  let hasVoted = localStorage.getItem(`voted_${pollId}`);
+    let selectedOptionId = null;
 
-  // 🧠 persistent userId
-  let userId = localStorage.getItem("userId");
-  if (!userId) {
-    userId = crypto.randomUUID();
-    localStorage.setItem("userId", userId);
-  }
-
-  async function loadPoll() {
-    const res = await fetch(`/api/poll/${pollId}`);
-    const poll = await res.json();
-
-    document.getElementById("question").innerText = poll.question;
-
-    renderOptions(poll);
-    socket.emit("join_poll", pollId);
-  }
-
-  function renderOptions(poll) {
-    const container = document.getElementById("options");
-
-    const totalVotes = poll.options.reduce((sum, o) => sum + (o.votes || 0), 0);
-
-    container.innerHTML = poll.options.map(opt => {
-      const votes = opt.votes || 0;
-      const percent = totalVotes ? ((votes / totalVotes) * 100).toFixed(1) : 0;
-
-      return `
-        <div class="option">
-          <div>${opt.text}</div>
-
-          ${
-            hasVoted
-              ? `
-                <div class="votes">${votes} votes (${percent}%)</div>
-                <div class="bar" style="width:${percent}%"></div>
-              `
-              : `
-                <button onclick="vote('${opt.id}')">Vote</button>
-              `
-          }
-        </div>
-      `;
-    }).join("");
-
-    // message
-    const msg = document.getElementById("message");
-    if (hasVoted) {
-      msg.innerText = "✅ You have already voted. Showing results.";
-    } else {
-      msg.innerText = "";
-    }
-  }
-
-  async function vote(optionId) {
-    if (hasVoted) return;
-
-    const res = await fetch(`/api/poll/${pollId}/vote`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ optionId, userId })
-    });
-
-    const data = await res.json();
-
-    if (data.error) {
-      alert(data.error);
+    if (!pollId) {
+      document.getElementById("question").innerText = "Invalid poll link";
       return;
     }
 
-    localStorage.setItem(`voted_${pollId}`, "true");
-    hasVoted = true;
+    // Check if user already voted
+    let hasVoted = localStorage.getItem(`voted_${pollId}`);
+
+    // Persistent userId
+    let userId = localStorage.getItem("userId");
+    if (!userId) {
+      userId = crypto.randomUUID();
+      localStorage.setItem("userId", userId);
+    }
+
+    async function loadPoll() {
+      try {
+        const res = await fetch(`/api/poll/${pollId}`);
+
+        if (!res.ok) {
+          document.getElementById("question").innerText = "Poll not found";
+          return;
+        }
+
+        const poll = await res.json();
+
+        document.getElementById("question").innerText = poll.question;
+        renderOptions(poll);
+
+        socket.emit("join_poll", pollId);
+      } catch (err) {
+        console.error(err);
+        document.getElementById("question").innerText =
+          "Something went wrong";
+      }
+    }
+
+    function renderOptions(poll) {
+      const container = document.getElementById("options");
+
+      const totalVotes = poll.options.reduce(
+        (sum, o) => sum + (o.votes || 0),
+        0
+      );
+
+      container.innerHTML = poll.options
+        .map((opt) => {
+          const votes = opt.votes || 0;
+          const percent = totalVotes
+            ? ((votes / totalVotes) * 100).toFixed(1)
+            : 0;
+
+          return `
+            <div class="option">
+              <div>${opt.text}</div>
+              ${
+                hasVoted
+                  ? `
+                    <div class="votes">${votes} votes (${percent}%)</div>
+                    <div class="bar" style="width:${percent}%"></div>
+                  `
+                  : `
+                    <button onclick="vote('${opt.id}', this)">Vote</button>
+                  `
+              }
+            </div>
+          `;
+        })
+        .join("");
+
+      const msg = document.getElementById("message");
+      msg.innerText = hasVoted ? "✅ You have already voted." : "";
+    }
+
+    window.vote = async function (optionId, btn) {
+      if (hasVoted) return;
+
+      selectedOptionId = optionId;
+
+      btn.style.backgroundColor = "green";
+      btn.style.color = "white";
+
+      const res = await fetch(`/api/poll/${pollId}/vote`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ optionId, userId }),
+      });
+
+      const data = await res.json();
+
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      localStorage.setItem(`voted_${pollId}`, "true");
+      hasVoted = true;
+
+      await loadPoll();
+    };
+
+    socket.on("vote_update", (poll) => {
+      if (poll.id === pollId) {
+        renderOptions(poll);
+      }
+    });
+
+    loadPoll();
   }
 
-  socket.on("vote_update", (poll) => {
-    renderOptions(poll);
-  });
-
-  loadPoll();
+  init();
 </script>
 
 </body>

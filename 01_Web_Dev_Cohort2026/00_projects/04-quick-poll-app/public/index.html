@@ -1,205 +1,242 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Quick Poll</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quick Poll</title>
 
-  <!-- Socket.IO -->
-  <script src="/socket.io/socket.io.js"></script>
+    
+    <script src="/socket.io/socket.io.js"></script>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #2e2a27;
-      color: #e6e1dc;
-      margin: 0;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background: #3b3531;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
-    }
-
-    h1 {
-      color: #d2a679;
-    }
-
-    input, button {
-      padding: 10px;
-      margin: 5px 0;
-      border: none;
-      border-radius: 5px;
-    }
-
-    input {
-      width: 100%;
-      background: #4a433e;
-      color: white;
-    }
-
-    button {
-      background: #8b5e3c;
-      color: white;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #a06f47;
-    }
-
-    .option {
-      background: #4a433e;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 5px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .votes {
-      font-weight: bold;
-      color: #d2a679;
-    }
-
-    .render-container{
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #2e2a27;
+        color: #e6e1dc;
+        margin: 0;
         padding: 20px;
-    }
-  </style>
-</head>
-<body>
+      }
 
-<div class="container">
-  <h1>Quick Poll</h1>
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background: #3b3531;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+      }
 
-  <!-- Create Poll -->
-  <div class="render-container">
-    <h3>Create Poll</h3>
-    <input id="question" placeholder="Enter question" />
-    <input id="opt1" placeholder="Option 1" />
-    <input id="opt2" placeholder="Option 2" />
-    <input id="opt3" placeholder="Option 3" />
-    <button onclick="createPoll()">Create Poll</button>
+      h1 {
+        color: #d2a679;
+      }
 
-    <!--  Share link UI -->
-    <div id="shareBox" style="margin-top:10px;"></div>
-  </div>
+      input,
+      button {
+        padding: 10px;
+        margin: 5px 0;
+        border: none;
+        border-radius: 5px;
+      }
 
-  <hr/>
+      input {
+        width: 100%;
+        background: #4a433e;
+        color: white;
+      }
 
-  <!-- Load Poll -->
-  <div class="render-container">
-    <h3>View Results</h3>
-<input id="resultPollIdInput" placeholder="Enter poll ID" />
-<button onclick="loadResults()">View Results</button>
-  </div>
+      button {
+        background: #8b5e3c;
+        color: white;
+        cursor: pointer;
+      }
 
-  <hr/>
+      button:hover {
+        background: #a06f47;
+      }
 
-  <!-- Poll Display -->
-  <div id="pollSection" class="render-container"></div>
-</div>
+      .option {
+        background: #4a433e;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-<script>
-  const socket = io();
+      .votes {
+        font-weight: bold;
+        color: #d2a679;
+      }
 
-  let currentPollId = null;
+      .render-container {
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Quick Poll</h1>
 
-  // create/get userId (persisted)
-  let userId = localStorage.getItem("userId");
-  if (!userId) {
-    userId = crypto.randomUUID();
-    localStorage.setItem("userId", userId);
-  }
+      <!-- Create Poll -->
+      <div class="render-container">
+        <h3>Create Poll</h3>
+        <input id="question" placeholder="Enter question" />
+        <input id="opt1" placeholder="Option 1" />
+        <input id="opt2" placeholder="Option 2" />
+        <input id="opt3" placeholder="Option 3" />
+        <button onclick="createPoll()">Create Poll</button>
 
-  async function createPoll() {
-    const question = document.getElementById("question").value;
-    const options = [
-      document.getElementById("opt1").value,
-      document.getElementById("opt2").value,
-      document.getElementById("opt3").value,
-    ].filter(Boolean);
+        <!--  Share link UI -->
+        <div id="shareBox" style="margin-top: 10px"></div>
+      </div>
 
-    const res = await fetch("/api/poll", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question, options }),
-    });
+      <hr />
+      <hr />
 
-    const data = await res.json();
+      <!-- Poll Display -->
+      <div id="pollSection" class="render-container"></div>
+    </div>
 
-    const shareLink = data.shareUrl;
+    <script>
+      function getPollIdFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("pollId");
+      }
 
-    // Better UX instead of alert
-    const shareBox = document.getElementById("shareBox");
-    shareBox.innerHTML = `
+      const socket = io();
+
+      let currentPollId = null;
+
+      // create/get userId (persisted)
+      let userId = localStorage.getItem("userId");
+      if (!userId) {
+        userId = crypto.randomUUID();
+        localStorage.setItem("userId", userId);
+      }
+
+      async function createPoll() {
+        const question = document.getElementById("question").value;
+        const options = [
+          document.getElementById("opt1").value,
+          document.getElementById("opt2").value,
+          document.getElementById("opt3").value,
+        ].filter(Boolean);
+
+        const res = await fetch("/api/poll", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question, options }),
+        });
+
+        const data = await res.json();
+
+        const shareLink = data.shareUrl;
+
+        // Better UX instead of alert
+        const shareBox = document.getElementById("shareBox");
+        shareBox.innerHTML = `
       <p>Share this link:</p>
       <input value="${shareLink}" readonly onclick="this.select()" />
       <button onclick="copyLink('${shareLink}')">Copy</button>
     `;
-  }
+      }
 
-  function copyLink(link) {
-    navigator.clipboard.writeText(link);
-    alert("Link copied!");
-  }
+      function copyLink(link) {
+        navigator.clipboard.writeText(link);
+        alert("Link copied!");
+      }
 
-async function loadResults() {
-  const pollId = document.getElementById("resultPollIdInput").value;
+      window.onload = async () => {
+        const pollId = getPollIdFromURL();
 
-  const res = await fetch(`/api/poll/${pollId}`);
-  const poll = await res.json();
+        if (!pollId) {
+          console.log("No pollId in URL");
+          return;
+        }
 
-  currentPollId = pollId;
+        currentPollId = pollId;
 
-  socket.emit("join_poll", pollId);
+        socket.emit("join_poll", pollId);
 
-  renderResults(poll);
-}
+        const res = await fetch(`/api/poll/${pollId}`);
+        const poll = await res.json();
 
-function renderResults(poll) {
+        renderResults(poll);
+      };
+
+      function renderResults(poll) {
   const container = document.getElementById("pollSection");
+
+  const totalVotes = poll.options.reduce(
+    (sum, o) => sum + (o.votes || 0),
+    0
+  );
 
   container.innerHTML = `
     <h3>${poll.question}</h3>
-    ${poll.options.map(opt => `
-      <div class="option">
-        <span>${opt.text}</span>
-        <span class="votes">${opt.votes} votes</span>
-      </div>
-    `).join("")}
+    ${poll.options
+      .map((opt) => {
+        const votes = opt.votes || 0;
+        const percent = totalVotes
+          ? ((votes / totalVotes) * 100).toFixed(1)
+          : 0;
+
+        return `
+          <div class="option">
+            <div>${opt.text}</div>
+            <div class="votes">${votes} votes (${percent}%)</div>
+            <div class="bar" style="width:${percent}%"></div>
+          </div>
+        `;
+      })
+      .join("")}
   `;
 }
-  async function vote(optionId) {
-    const res = await fetch(`/api/poll/${currentPollId}/vote`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ optionId, userId }) 
-    });
 
-    const data = await res.json();
 
-    if (data.error) {
-      alert(data.error); // "Already voted"
-    }
+// function renderResults(poll) {
+//   const container = document.getElementById("pollSection");
 
-    await loadResults()
-  }
+//   container.innerHTML = `
+//     <h3>${poll.question}</h3>
+//     ${poll.options
+//       .map(
+//         (opt) => `
+//       <div class="option" onclick="vote('${opt.id}')">
+//         <span>${opt.text}</span>
+//         <span class="votes">${opt.votes} votes</span>
+//       </div>
+//     `
+//       )
+//       .join("")}
+//   `;
+// }
+      // async function vote(optionId) {
+      //   const res = await fetch(`/api/poll/${currentPollId}/vote`, {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({ optionId, userId }),
+      //   });
 
-  // live updates
-  socket.on("vote_update", (poll) => {
-    if (poll.id === currentPollId) {
-      renderResults(poll);
-    }
-  });
-</script>
+      //   const data = await res.json();
 
-</body>
+      //   if (data.error) {
+      //     alert(data.error); // "Already voted"
+      //   }
+
+      //   const updatedPoll = await fetch(`/api/poll/${currentPollId}`);
+      //   const pollData = await updatedPoll.json();
+      //   renderResults(pollData);
+      // }
+
+      // live updates
+      socket.on("vote_update", (poll) => {
+        if (poll.id === currentPollId) {
+          renderResults(poll);
+        }
+      });
+    </script>
+  </body>
 </html>
