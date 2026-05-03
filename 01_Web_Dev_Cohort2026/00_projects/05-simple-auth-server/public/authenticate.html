@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign In</title>
+  <title>Create Account</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -14,7 +14,6 @@
       --bg: #ffffff;
       --fg: #09090b;
       --muted: #71717a;
-      --muted-bg: #f4f4f5;
       --border: #e4e4e7;
       --input-bg: #ffffff;
       --ring: #18181b;
@@ -31,7 +30,6 @@
         --bg: #09090b;
         --fg: #fafafa;
         --muted: #a1a1aa;
-        --muted-bg: #27272a;
         --border: #27272a;
         --input-bg: #09090b;
         --ring: #d4d4d8;
@@ -81,8 +79,6 @@
       margin-bottom: 1rem;
     }
 
-    .icon svg { color: var(--bg); }
-
     h1 {
       font-size: 1.375rem;
       font-weight: 600;
@@ -99,6 +95,12 @@
     .form { display: flex; flex-direction: column; gap: 1rem; }
 
     .field { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
 
     label {
       font-size: 0.875rem;
@@ -127,19 +129,20 @@
       box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 20%, transparent);
     }
 
-    .field-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    input[aria-invalid="true"] {
+      border-color: #ef4444;
     }
 
-    .forgot {
-      font-size: 0.8125rem;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.15s;
+    input[aria-invalid="true"]:focus {
+      box-shadow: 0 0 0 3px color-mix(in srgb, #ef4444 20%, transparent);
     }
-    .forgot:hover { color: var(--fg); }
+
+    .hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .hint.error { color: #ef4444; }
 
     button[type="submit"] {
       width: 100%;
@@ -185,25 +188,27 @@
       padding: 0.625rem 0.75rem;
     }
 
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin: 0.25rem 0;
+    .success-msg {
+      display: none;
+      font-size: 0.8125rem;
+      color: #16a34a;
+      background: color-mix(in srgb, #16a34a 10%, transparent);
+      border: 1px solid color-mix(in srgb, #16a34a 25%, transparent);
+      border-radius: var(--radius);
+      padding: 0.625rem 0.75rem;
     }
 
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .divider span {
+    .terms {
       font-size: 0.75rem;
       color: var(--muted);
-      white-space: nowrap;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .terms a {
+      color: var(--fg);
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
 
     .footer {
@@ -225,109 +230,139 @@
   <div class="card">
     <div class="header">
       <div class="icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--bg)">
           <path d="M12 2a5 5 0 1 0 0 10A5 5 0 0 0 12 2z"/>
           <path d="M20 21a8 8 0 1 0-16 0"/>
         </svg>
       </div>
-      <h1>Welcome back</h1>
-      <p class="subtitle">Sign in to your account to continue</p>
+      <h1>Create an account</h1>
+      <p class="subtitle">Enter your details to get started</p>
     </div>
 
-    <form class="form" id="loginForm" novalidate>
+    <form class="form" id="signupForm" novalidate>
       <div id="errorMsg" class="error-msg" role="alert"></div>
+      <div id="successMsg" class="success-msg" role="status"></div>
 
-      <div class="field">
-        <label for="email">Email</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          autocomplete="email"
-          placeholder="you@example.com"
-          required
-        />
+      <div class="field-row">
+        <div class="field">
+          <label for="firstName">First name</label>
+          <input id="firstName" name="firstName" type="text" autocomplete="given-name" placeholder="John" required />
+        </div>
+        <div class="field">
+          <label for="lastName">Last name</label>
+          <input id="lastName" name="lastName" type="text" autocomplete="family-name" placeholder="Doe" required />
+        </div>
       </div>
 
       <div class="field">
-        <div class="field-row">
-          <label for="password">Password</label>
-          <a href="#" class="forgot">Forgot password?</a>
-        </div>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          autocomplete="current-password"
-          placeholder="••••••••"
-          required
-        />
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="new-password" placeholder="••••••••" required />
+        <span class="hint" id="passwordHint">Must be at least 8 characters</span>
+      </div>
+
+      <div class="field">
+        <label for="confirmPassword">Confirm password</label>
+        <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="••••••••" required />
+        <span class="hint error" id="confirmHint" style="display:none">Passwords do not match</span>
       </div>
 
       <button type="submit" id="submitBtn">
         <span class="spinner" id="spinner"></span>
-        <span id="btnText">Sign in</span>
+        <span id="btnText">Create account</span>
       </button>
+
+      <p class="terms">
+        By creating an account you agree to our
+        <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+      </p>
     </form>
 
     <div class="footer">
-      Don't have an account? <a id="signupLink" href="#">Sign up</a>
-
+      Already have an account? <a href="/o/authenticate">Sign in</a>
     </div>
   </div>
 
   <script>
-      const signupLink = document.getElementById("signupLink");
-  // signupLink.href = "/signup.html?" + window.location.search.substring(1);
-  signupLink.href = "/o/authenticate/signup?" + window.location.search.substring(1);
-
-    const form = document.getElementById('loginForm');
+    const form = document.getElementById('signupForm');
     const submitBtn = document.getElementById('submitBtn');
     const spinner = document.getElementById('spinner');
     const btnText = document.getElementById('btnText');
     const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
+    const passwordInput = document.getElementById('password');
+    const confirmInput = document.getElementById('confirmPassword');
+    const confirmHint = document.getElementById('confirmHint');
 
     const params = new URLSearchParams(window.location.search);
 
-    if (!params.get('client_id') || !params.get('redirect_uri')) {
-  showError("Invalid OAuth request. Missing client_id or redirect_uri.");
-  return;
-}
+    confirmInput.addEventListener('input', () => {
+      const mismatch = confirmInput.value && confirmInput.value !== passwordInput.value;
+      confirmHint.style.display = mismatch ? 'block' : 'none';
+      confirmInput.setAttribute('aria-invalid', mismatch ? 'true' : 'false');
+    });
 
     function showError(msg) {
       errorMsg.textContent = msg;
       errorMsg.style.display = 'block';
+      successMsg.style.display = 'none';
     }
 
-    function hideError() {
+    function showSuccess(msg) {
+      successMsg.textContent = msg;
+      successMsg.style.display = 'block';
       errorMsg.style.display = 'none';
+    }
+
+    function hideMessages() {
+      errorMsg.style.display = 'none';
+      successMsg.style.display = 'none';
     }
 
     function setLoading(loading) {
       submitBtn.disabled = loading;
       spinner.style.display = loading ? 'block' : 'none';
-      btnText.textContent = loading ? 'Signing in…' : 'Sign in';
+      btnText.textContent = loading ? 'Creating account…' : 'Create account';
     }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      hideError();
+      hideMessages();
 
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
       const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
+      const password = passwordInput.value;
+      const confirmPassword = confirmInput.value;
 
-      if (!email || !password) {
+      if (!firstName || !lastName || !email || !password || !confirmPassword) {
         showError('Please fill in all fields.');
+        return;
+      }
+
+      if (password.length < 8) {
+        showError('Password must be at least 8 characters.');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showError('Passwords do not match.');
         return;
       }
 
       setLoading(true);
 
       try {
-        const res = await fetch('/o/authenticate/sign-in', {
+        const res = await fetch('/o/authenticate/sign-up', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            firstName,
+            lastName,
             email,
             password,
             client_id: params.get('client_id'),
@@ -343,6 +378,11 @@
           showError(data.message || 'Something went wrong. Please try again.');
         } else if (data.redirect) {
           window.location.href = data.redirect;
+        } else {
+          showSuccess('Account created! Redirecting…');
+          setTimeout(() => {
+            window.location.href = `/o/authenticate${window.location.search}`;
+          }, 1500);
         }
       } catch {
         showError('Something went wrong. Please try again.');

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Consent</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #111827;
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      background: #10b981;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Authorize App</h2>
+  <p id="app"></p>
+
+  <button onclick="approve()">Allow</button>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+
+  const client_id = params.get("client_id");
+  const redirect_uri = params.get("redirect_uri");
+  const app_name = params.get("app_name");
+  const state = params.get("state");
+
+  document.getElementById("app").innerText =
+    `App "${app_name}" wants access`;
+
+  function approve() {
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "/o/authorize/confirm";
+
+    const fields = {
+      client_id,
+      redirect_uri,
+      state
+    };
+
+    for (let key in fields) {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = fields[key];
+      form.appendChild(input);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Authorize App</title>
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --primary: #06b6d4;
+      --secondary: #10b981;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2937;
+      --radius: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 28px;
+      width: 360px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .app-name {
+      color: var(--primary);
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .permissions {
+      background: #020617;
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .permissions li {
+      margin-bottom: 6px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 10px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .allow {
+      background: var(--secondary);
+      color: white;
+    }
+
+    .deny {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .footer {
+      margin-top: 15px;
+      font-size: 12px;
+      text-align: center;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h2>Continue to <span id="appName" class="app-name">App</span>?</h2>
+
+    <p>This app will be able to:</p>
+
+    <ul class="permissions">
+      <li>✔ View your profile</li>
+      <li>✔ Access your email</li>
+    </ul>
+
+    <!-- Allow -->
+    <form method="POST" action="/o/authorize/confirm">
+      <input type="hidden" name="client_id" id="clientId" />
+      <input type="hidden" name="redirect_uri" id="redirectUri" />
+      <input type="hidden" name="state" id="state" />
+
+      <div class="actions">
+        <button type="submit" class="allow">Allow</button>
+      </div>
+    </form>
+
+    <!-- Deny -->
+    <div class="actions" style="margin-top:10px;">
+      <button class="deny" onclick="deny()">Deny</button>
+    </div>
+
+    <div class="footer">
+      Secure OAuth Authorization
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    const clientId = params.get("client_id");
+    const redirectUri = params.get("redirect_uri");
+    const appName = params.get("app_name");
+    const state = params.get("state");
+
+    document.getElementById("clientId").value = clientId;
+    document.getElementById("redirectUri").value = redirectUri;
+    document.getElementById("state").value = state;
+    document.getElementById("appName").innerText = appName || "Unknown App";
+
+    function deny() {
+      if (!redirectUri) return;
+
+      const url = new URL(redirectUri);
+      url.searchParams.set("error", "access_denied");
+
+      if (state) {
+        url.searchParams.set("state", state);
+      }
+
+      window.location.href = url.toString();
+    }
+  </script>
+
+</body>
+</html>

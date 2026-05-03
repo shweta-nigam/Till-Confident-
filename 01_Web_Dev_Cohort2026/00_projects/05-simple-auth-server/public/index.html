@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Auth Server</title>
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --primary: #06b6d4;
+      --secondary: #10b981;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: var(--primary);
+    }
+
+    .card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    input {
+      background: #1f2937;
+      color: white;
+    }
+
+    button {
+      background: var(--secondary);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .result {
+      margin-top: 15px;
+      background: #020617;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      word-break: break-all;
+    }
+
+    .flow {
+      margin-top: 20px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🔐 Auth Server</h1>
+  <p>OAuth2 + OIDC Authorization Server</p>
+
+  <!-- CLIENT REGISTRATION -->
+  <div class="card">
+    <h2>Register New Application</h2>
+
+    <input id="appName" placeholder="App Name (e.g. My App)" />
+    <input id="redirectUri" placeholder="Redirect URI (e.g. http://localhost:3000/callback)" />
+
+    <button onclick="register()">Register Client</button>
+
+    <div id="result" class="result" style="display:none;"></div>
+  </div>
+
+  <!-- FLOW INFO -->
+  <div class="card flow">
+    <h2>How it works</h2>
+    <ol>
+      <li>Register your app → get <b>client_id</b></li>
+      <li>Redirect users to <code>/o/authorize</code></li>
+      <li>User logs in + consents</li>
+      <li>You receive <b>authorization code</b></li>
+      <li>Exchange code at <code>/o/token</code></li>
+    </ol>
+  </div>
+</div>
+
+<script>
+  async function register() {
+    const appName = document.getElementById("appName").value;
+    const redirectUri = document.getElementById("redirectUri").value;
+
+    if (!appName || !redirectUri) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    try {
+      const res = await fetch("/o/register-client", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          appName,
+          redirectUri
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message || "Error");
+        return;
+      }
+
+      const resultDiv = document.getElementById("result");
+      resultDiv.style.display = "block";
+
+      resultDiv.innerHTML = `
+        <b>Client Registered 🎉</b><br/><br/>
+        <b>Client ID:</b><br/> ${data.client_id} <br/><br/>
+        <b>Client Secret:</b><br/> ${data.client_secret}
+      `;
+
+    } catch (err) {
+      console.error(err);
+      alert("Server error");
+    }
+  }
+</script>
+
+</body>
+</html>

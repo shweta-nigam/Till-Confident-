@@ -1,4 +1,4 @@
-import { kafkaCLient } from "./kafka-client.js";
+import { kafkaClient } from "./kafka-client.js";
 
 async function init() {
   const kafkaConsumer = kafkaClient.consumer({

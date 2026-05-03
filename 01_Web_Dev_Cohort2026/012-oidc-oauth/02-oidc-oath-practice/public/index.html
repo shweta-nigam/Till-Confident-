@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Auth Server</title>
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --primary: #06b6d4;
+      --secondary: #10b981;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2937;
+      --radius: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card h2 {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
+      color: var(--muted);
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: #020617;
+      color: var(--text);
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .result {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #020617;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      word-break: break-all;
+    }
+
+    .highlight {
+      color: var(--secondary);
+    }
+
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Header -->
+    <header>
+      <div class="logo">Auth Server</div>
+      <a href="/o/authenticate">
+        <button class="btn btn-primary">Login</button>
+      </a>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <h1>Simple OAuth & OIDC Provider</h1>
+      <p>
+        Integrate authentication into your apps using our secure authorization server.
+        Generate client credentials and start authenticating users.
+      </p>
+    </section>
+
+    <!-- App Registration -->
+    <section class="card">
+      <h2>Register Your Application</h2>
+
+      <div class="form-group">
+        <label>App Name</label>
+        <input type="text" id="appName" placeholder="My App" />
+      </div>
+
+      <div class="form-group">
+        <label>Redirect URI</label>
+        <input type="text" id="redirectUri" placeholder="https://your-app.com/auth/callback" />
+      </div>
+
+      <button class="btn btn-primary" onclick="createApp()">Generate Credentials</button>
+
+      <div id="result" class="result" style="display:none"></div>
+    </section>
+
+    <!-- How it works -->
+    <section class="card">
+      <h2>How it Works</h2>
+      <p class="highlight">1. Redirect users to:</p>
+      <p>/o/authorize?client_id=...&redirect_uri=...</p>
+
+      <p class="highlight">2. User logs in</p>
+
+      <p class="highlight">3. Receive authorization code</p>
+
+      <p class="highlight">4. Exchange code for token</p>
+    </section>
+
+    <footer>
+      Built with your custom Auth Server
+    </footer>
+
+  </div>
+
+  <script>
+    async function createApp() {
+      const appName = document.getElementById("appName").value;
+      const redirectUri = document.getElementById("redirectUri").value;
+
+      if (!appName || !redirectUri) {
+        alert("Fill all fields");
+        return;
+      }
+
+      try {
+        const res = await fetch("/o/register-client", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ appName, redirectUri })
+        });
+
+        const data = await res.json();
+
+        const result = document.getElementById("result");
+        result.style.display = "block";
+
+        result.innerHTML = `
+          <b>Client ID:</b><br>${data.client_id}<br><br>
+          <b>Client Secret:</b><br>${data.client_secret}
+        `;
+      } catch (err) {
+        alert("Error creating app");
+      }
+    }
+  </script>
+
+</body>
+</html>

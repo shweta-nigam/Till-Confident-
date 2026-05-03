@@ -1,5 +1,5 @@
 {
-  "name": "02-oidc-oath-practice",
+  "name": "02-simple-auth-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,7 +13,9 @@
   "license": "ISC",
   "packageManager": "pnpm@10.14.0",
   "dependencies": {
+    "body-parser": "^2.2.2",
     "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
     "express": "^5.2.1",
@@ -22,7 +24,9 @@
     "pg": "^8.20.0"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.19.6",
     "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.6.0",
