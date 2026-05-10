@@ -11,12 +11,11 @@ dotenv.config();
 
 async function main() {
   const PORT = process.env.PORT ?? 8080;
-  const BASE_URL = `http://localhost:${PORT}`;
+  const BASE_URL = process.env.BASE_URL
 
   const app = express();
   const server = http.createServer(app);
 
-  // ✅ Proper socket setup
   const io = new Server(server);
 
   // ------------------ KAFKA SETUP ------------------
@@ -32,7 +31,7 @@ async function main() {
 
   await kafkaConsumer.subscribe({
     topic: "location-updates",
-    fromBeginning: false, // ✅ important
+    fromBeginning: false, // important
   });
 
   // ------------------ KAFKA CONSUMER ------------------
@@ -42,14 +41,14 @@ async function main() {
       try {
         const data = JSON.parse(message.value.toString());
 
-        // ✅ safety check
+        // safety check
         if (!data || !data.roomId) return;
 
         const { id, latitude, longitude, roomId } = data;
 
         console.log("Kafka received:", data);
 
-        // ✅ send ONLY to room
+        // send ONLY to room
         io.to(roomId).emit("server:location:update", {
           id,
           latitude,
