@@ -31,7 +31,7 @@ console.log(b2);  // undefined
 b2 = 10
 
 // c2 declared but not accessible because of TDZ (Temporal Dead-Zone) 
-console.log(c2);  // referenceError:  c2 is not defined
+console.log(c2);  // ReferenceError: Cannot access 'c2' before initialization
 let c2 
 
 // values can be changed if let is used 
